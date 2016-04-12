@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using RepoLocalDB;
 
 namespace NodePad
 {
@@ -13,5 +8,15 @@ namespace NodePad
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            using (var ctx = new NodePadContext())
+            {
+                //var vr = new VectorRecord { VectorFormat = VectorFormat.Dense, Length = 25, Coords = "Coords", Values = "Values", Description = "Description" };
+                //ctx.VectorRecords.Add(vr);
+                //ctx.SaveChanges();
+            }
+
+        }
     }
 }
