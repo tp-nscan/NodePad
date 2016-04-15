@@ -255,6 +255,10 @@ MathNetConv.Base64ToSparseF32Matrix bounds base64
 
 Grid2dCnxn.AllOffsets {Sz2.X=5; Y=4} Grid2dCnxn.StarNbrs |> Seq.toArray
 A2dUt.Raster2d {Sz2.X=5; Y=4} |> Seq.toArray
-(DesignData.Grid2DTestData {Sz2.X=10; Sz2.Y=15}) |> Seq.toArray
+(DesignData.Grid2dGradient {Sz2.X=10; Sz2.Y=15}) |> Seq.toArray
 (A2dUt.Raster2d {Sz2.X=4; Sz2.Y=4}) |> Seq.toArray
 
+
+
+open System
+let g = Guid.Parse("d09fb93d-f22d-4878-94c3-425be1ce270f")

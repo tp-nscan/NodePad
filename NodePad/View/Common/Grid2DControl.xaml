@@ -9,9 +9,9 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-   d:DataContext="{d:DesignInstance Type=common1:Grid2DVmD, IsDesignTimeCreatable=True}">
-    
-    <Border BorderThickness="1" BorderBrush="Gray">
+    d:DataContext="{d:DesignInstance Type=common1:Grid2DVmD, IsDesignTimeCreatable=True}">
+
+    <Border BorderThickness="1" BorderBrush="{DynamicResource ButtonText}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
@@ -21,7 +21,7 @@
             <Border x:Name="wbGrid"
                 Grid.Row="1"
                 BorderThickness="1"
-                BorderBrush="White">
+                BorderBrush="{DynamicResource ButtonText}">
 
                 <common:WbImage x:Name="wbImage"
                     PointerPosition ="{Binding WbImageVm.PointerPosition, Mode=TwoWay}"

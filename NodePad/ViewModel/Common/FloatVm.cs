@@ -1,26 +1,27 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Reactive.Subjects;
 using System.Windows.Input;
 using NodePad.Common;
 
 namespace NodePad.ViewModel.Common
 {
-    public class IntVm : BindableBase, IDataErrorInfo
+    public class FloatVm : BindableBase, IDataErrorInfo
     {
-        private readonly Subject<int> _valueChanged = new Subject<int>();
-        public IObservable<int> OnValueChanged => _valueChanged;
+        private readonly Subject<float> _valueChanged = new Subject<float>();
+        public IObservable<float> OnValueChanged => _valueChanged;
 
-        public IntVm(int val, int maxVal, string caption, int minVal)
+        public FloatVm(float val, float minVal, float maxVal, string caption)
         {
-            IntVal = val;
-            StrVal = IntVal.ToString();
+            FloatVal = val;
+            StrVal = FloatVal.ToString(CultureInfo.InvariantCulture);
             MaxVal = maxVal;
             Caption = caption;
             MinVal = minVal;
         }
 
-        public int IntVal { get; private set; }
+        public float FloatVal { get; private set; }
 
         private string _strVal;
         public string StrVal
@@ -29,10 +30,10 @@ namespace NodePad.ViewModel.Common
             set { SetProperty(ref _strVal, value); }
         }
 
-        public int MinVal { get; private set; }
+        public float MinVal { get; private set; }
 
-        public int MaxVal { get; private set; }
-        
+        public float MaxVal { get; private set; }
+
         public string Caption { get; private set; }
 
         #region UpdateCommand
@@ -46,8 +47,8 @@ namespace NodePad.ViewModel.Common
 
         private void DoUpdate()
         {
-            IntVal = int.Parse(_strVal);
-            _valueChanged.OnNext(IntVal);
+            FloatVal = float.Parse(_strVal);
+            _valueChanged.OnNext(FloatVal);
         }
 
         bool CanUpdate()
@@ -64,18 +65,18 @@ namespace NodePad.ViewModel.Common
                 switch (columnName)
                 {
                     case "StrVal":
-                        return IntZ(StrVal, MinVal, MaxVal);
+                        return FloatZ(StrVal, MinVal, MaxVal);
                 }
                 return String.Empty;
             }
         }
-        
+
         public string Error => this["StrVal"];
 
-        static string IntZ(string val, int minVal, int maxVal)
+        static string FloatZ(string val, float minVal, float maxVal)
         {
-            int outVal;
-            if (int.TryParse(val, out outVal))
+            float outVal;
+            if (float.TryParse(val, out outVal))
             {
                 if (outVal <= minVal) return $"must be > {minVal}";
                 if (outVal > maxVal) return $"must be < {maxVal}";

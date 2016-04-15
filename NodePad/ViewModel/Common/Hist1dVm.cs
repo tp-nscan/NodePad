@@ -41,8 +41,7 @@ namespace NodePad.ViewModel.Common
         public float MaxValue { get; private set; }
     
         public List<float> Values { get; private set; }
-
-        private IDisposable _szChangedSubscr;
+        
         private GraphVm _graphVm;
         public GraphVm GraphVm
         {

@@ -73,9 +73,10 @@ module MatrixUt =
     // given the shape of the matrix, and a complete sequence of values, a 2d dense
     // matrix is produced
     let DenseFromSeq<'a when 'a:(new:unit->'a) and 'a:struct and 'a:> IEquatable<'a> and 'a:> IFormattable and 'a:> ValueType>
-                 rows cols (mVals:seq<'a>) =
-        let chunk = mVals |> Seq.take (rows*cols) |> Seq.toArray
-        DenseMatrix.init rows cols (fun x y -> chunk.[x*cols + y])
+                    (bounds:Sz2<int>)  (mVals:seq<'a>) =
+        let chunk = mVals |> Seq.take (Count bounds) |> Seq.toArray
+        DenseMatrix.init bounds.Y bounds.X (fun x y -> chunk.[x*bounds.X + y])
+
 
     // given the shape of the matrix, and a sequence of values, a 2d sparse
     // matrix is produced
@@ -191,13 +192,26 @@ module MatrixUt =
 
 module GenMatrix =
 
-    let DenseF32 (bounds:Sz2<int>) (seed:int) =
-        let valA = GenS.SeqOfRandUF32 (GenV.Twist seed)
-                   |> Seq.take(BT.Count bounds)
-                   |> Seq.toArray
-        DenseMatrix.init (bounds.Y) 
-                     (bounds.X) 
-                     (fun x y -> valA.[y * bounds.X + x])
+    let Dense rndGen (bounds:Sz2<int>) (seed:int) =
+        MatrixUt.DenseFromSeq bounds ( rndGen (GenV.Twist seed)
+                                            |> Seq.take(BT.Count bounds)
+                                            |> Seq.toArray)
+
+
+    let DenseUF32 (bounds:Sz2<int>) (seed:int) =
+        Dense GenS.SeqOfRandUF32 bounds seed
+
+
+//        MatrixUt.DenseFromSeq bounds ( GenS.SeqOfRandUF32 (GenV.Twist seed)
+//                                                       |> Seq.take(BT.Count bounds)
+//                                                       |> Seq.toArray)
+
+//        let valA = GenS.SeqOfRandUF32 (GenV.Twist seed)
+//                   |> Seq.take(BT.Count bounds)
+//                   |> Seq.toArray
+//        DenseMatrix.init (bounds.Y) 
+//                     (bounds.X) 
+//                     (fun x y -> valA.[y * bounds.X + x])
 
 
     let RandSparseF32 (bounds:Sz2<int>) count seed =

@@ -18,11 +18,11 @@ namespace NodePad.ViewModel.Design.Common
             return GenBT.TestP2N(0.0f, 1.0f, DateTime.Now.Millisecond, count).ToArray(); ;
         }
 
-        static Sz2<int> BinCts => new Sz2<int>(100,100);
+        public static Sz2<int> BinCts => new Sz2<int>(100,100);
 
-        static R<float> TestBounds => new R<float>(minX:-1.0f, maxX:2.2f, minY:1.2f, maxY:3.4f);
+        public static R<float> TestBounds => new R<float>(minX:-1.0f, maxX:2.2f, minY:1.2f, maxY:3.4f);
 
-        static Func<int[], ColorLeg<int>> ColorLegT => 
+        public static Func<int[], ColorLeg<int>> ColorLegT => 
              ColorSets.WcHistLegInts;
 
     }

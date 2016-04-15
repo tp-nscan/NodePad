@@ -24,6 +24,13 @@
                 <mui:Link DisplayName="Legend" Source="/View/Pages/Sandbox/LegendPage.xaml" /> 
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
+        
+        <mui:LinkGroup DisplayName="CPU">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Ring" Source="/View/Pages/CPU/RingPage.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        
         <mui:LinkGroup DisplayName="settings" GroupKey="settings">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="software" Source="View/Pages/SettingsPage.xaml" />

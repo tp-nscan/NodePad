@@ -86,11 +86,11 @@
     </Style>
 
 
-    <Style TargetType="{x:Type common:IntCtrl}">
+    <Style TargetType="{x:Type common:TextBoxCtrl}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="common:Sz2IntCtrl">
+                <ControlTemplate TargetType="common:TextBoxCtrl">
                     <Border x:Name="PART_MainBorder" BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
@@ -103,9 +103,9 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="X" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0"/>
-                            <TextBox Height="20" Width="50" Text="{Binding StrVal, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="0,0,5,0"/>
-                            <mui:ModernButton Grid.Row="0" Grid.Column="4" Command="{Binding UpdateCommand}" Content="update" Margin="5,0"/>
+                            <TextBlock Text="{Binding Caption}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0"/>
+                            <TextBox Height="20" MinWidth="50" Text="{Binding StrVal, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="0,0,5,0"/>
+                            <mui:ModernButton Grid.Row="0" Grid.Column="2" Command="{Binding UpdateCommand}" Content="update" Margin="5,0"/>
 
                         </Grid>
                     </Border>
@@ -116,13 +116,12 @@
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type common:Sz2IntCtrl}">
+                        <ControlTemplate TargetType="{x:Type common:TextBoxCtrl}">
                             <Border x:Name="PART_MainBorder" BorderBrush="{TemplateBinding BorderBrush}" 
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
@@ -131,11 +130,9 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="X" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0"/>
-                                    <TextBlock Text="Y" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0"/>
-                                    <TextBox Height="20" Width="50" Text="{Binding X, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="5"/>
-                                    <TextBox Height="20" Width="50" Text="{Binding Y, ValidatesOnDataErrors=True}" Grid.Row="1" Grid.Column="1" Margin="5"/>
-                                    <mui:ModernButton  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                                    <TextBlock Text="{Binding Caption}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0"/>
+                                    <TextBox Height="20" Width="50" Text="{Binding StrVal, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" Margin="5"/>
+                                    <mui:ModernButton  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"
                                                        Command="{Binding UpdateCommand}" Content="update"/>
 
                                 </Grid>

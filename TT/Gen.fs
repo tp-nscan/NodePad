@@ -9,6 +9,7 @@ module GenV =
     let Twist (seed:int) =
         MersenneTwister(seed)
 
+
     let RandomName (prefix:string) =
         let rng = Random.MersenneTwister()
         let suffix = rng.Next()
@@ -17,18 +18,14 @@ module GenV =
 
     // 0f <=> 1f with probability p
     let FlipBUF32 (rng:Random) (p:float) (value:float32) =
-        if (rng.NextDouble() < p) then
-            1.0f - value
-        else
-            value
+        if (rng.NextDouble() < p) then 1.0f - value
+        else value
 
 
     /// -1f <=> 1f with probability p
     let FlipBSF32 (probability:float) (rng:Random) (value:float32) =
-        if (rng.NextDouble() < probability) then
-            value * -1.0f
-        else
-            value
+        if (rng.NextDouble() < probability) then value * -1.0f
+        else value
 
 
 

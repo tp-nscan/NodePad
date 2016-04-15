@@ -149,11 +149,13 @@ module CliqueEbuilders =
                     (fun x y -> temp.[x*cliqueGroupRandInitParams.GroupCount + y])
 
 
+    let CliqueMatrixSize (cliqueBuildRandMemParams:CliqueBuildRandMemParams) =
+        { Sz2.X = cliqueBuildRandMemParams.MemSize; Y = cliqueBuildRandMemParams.MemCount}
+
+
     let CreateRandomMems (cliqueBuildRandMemParams:CliqueBuildRandMemParams) =
         let seq = (GenS.SeqOfRandBUF32 0.5f (GenV.Twist(cliqueBuildRandMemParams.RandSeed)))
-        MatrixUt.DenseFromSeq cliqueBuildRandMemParams.MemSize
-                cliqueBuildRandMemParams.MemCount 
-                seq
+        MatrixUt.DenseFromSeq (CliqueMatrixSize cliqueBuildRandMemParams ) seq
 
 
     let MakeFirstCliqueReplicas(cliqueGroupReplicaParams:CliqueGroupReplicaParams) =

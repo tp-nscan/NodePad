@@ -3,6 +3,14 @@ using TT;
 
 namespace RepoLocalDB
 {
+    public enum DataType
+    {
+        F32,
+        F64,
+        I32,
+        Bit
+    }
+
     public enum VectorFormat
     {
         Dense,

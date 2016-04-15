@@ -106,7 +106,6 @@ module BT =
             MaxY = System.Int32.MinValue; 
         }
 
-
     // makes an interval from arbitrary values with the expected ordering
     let inline RegularI< ^a when ^a: comparison> (x1:^a) (x2:^a) =
         if x1 < x2 then
@@ -273,6 +272,24 @@ module BT =
 
     let Count (sz:Sz2<int>) =
         sz.X * sz.Y
+
+    let MutateP1V p1V f =
+        {P1V.X = p1V.X; V = f p1V.V}
+
+    let MutateP2V p2V f =
+        {P2V.X = p2V.X; Y= p2V.Y; V = f p2V.V}
+
+    let MutateP3V p3V f =
+        {P3V.X = p3V.X; Y=p3V.Y; Z=p3V.Z; V = f p3V.V}
+
+    let MutateIV iV f =
+        {IV.Min = iV.Min; Max = iV.Max; V = f iV.V}
+
+    let MutateRV rV f =
+        {RV.MinX=rV.MinX; MinY = rV.MinY; MaxX=rV.MaxX; MaxY=rV.MaxY; V = f rV.V}
+
+    let MutateLS2V ls2V f =
+        {LS2V.X1=ls2V.X1; LS2V.X2=ls2V.X2; LS2V.Y1=ls2V.Y1; LS2V.Y2=ls2V.Y2; V = f ls2V.V}
 
 
 module AUt =

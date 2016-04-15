@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace NodePad.View.Common
 {
-    public class IntCtrl : Control
+    public class TextBoxCtrl : Control
     {
         public Orientation Orientation
         {
@@ -12,6 +12,6 @@ namespace NodePad.View.Common
         }
 
         public static readonly DependencyProperty OrientationProperty =
-            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Sz2IntCtrl), null);
+            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(TextBoxCtrl), null);
     }
 }

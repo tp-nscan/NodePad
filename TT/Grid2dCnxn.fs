@@ -128,7 +128,7 @@ module Grid2dCnxn =
 
    
     let InvariantLS2Vs (strides:Sz2<int>) (offsets:seq<P2<int>>) 
-                 (localWeights:int->int->float32) =
+                       (localWeights:int->int->float32) =
         AllOffsets strides offsets
         |> Seq.map(fun inf-> 
                     { 
@@ -145,6 +145,16 @@ module Grid2dCnxn =
         InvariantLS2Vs strides StarNbrs (fun x y -> 1.0f)
 
 
+    let CnxnsFromSeq (offsets:seq<P2<int>>) (strides:Sz2<int>) (seqVs:seq<float32>) = 
+        let enumer = seqVs.GetEnumerator()
+        InvariantLS2Vs strides offsets (fun x y -> enumer.MoveNext() |> ignore
+                                                   enumer.Current)
+
+
+    let NoiseyLocalRing (strides:Sz2<int>) seed mean dev = 
+        CnxnsFromSeq RingNbrs strides (GenS.NormalSF32 (GenV.Twist seed) mean dev)
+
+
     let GradientStar (strides:Sz2<int>) = 
         let gf x1 y1 x2 y2 =
             let x1f = (float32 x1)
@@ -155,20 +165,6 @@ module Grid2dCnxn =
             let sY = (float32 strides.Y)
             (x1f - y1f) / sX
         GeneralLS2Vs strides StarNbrs gf
-
-
-//    let LS2VForNode (offsets: (int->int->float32) -> P2V<int,float32>[]) 
-//                    (valuator:int->int->float32) 
-//                    (stride:int) (x:int) (y:int) =
-//        (offsets valuator) |> Array.map( 
-//            fun p -> { 
-//                      LS2V.X1 = x; 
-//                           Y1 = y; 
-//                           X2 = (p.X + x + stride) % stride; 
-//                           Y2 = (p.Y + y + stride) % stride;
-//                           V = p.V
-//                     }
-//            )
 
 
     let MatrixEntryToVectorEntry colCount (mE:int*int*float32) =
@@ -187,6 +183,11 @@ module Grid2dCnxn =
     let Cnx4dToCnx2d (stride:int) (coords:seq<LS2<int>>) =
         coords |> Seq.map(fun d4->{P2.X = d4.Y1*stride + d4.X1; 
                                       Y = d4.Y2*stride + d4.X2})
+
+    let Cnx4dVToCnx2d<'a> (stride:int) (coords:seq<LS2V<int,'a>>) =
+        coords |> Seq.map(fun d4->{P2V.X = d4.Y1*stride + d4.X1; 
+                                       Y = d4.Y2*stride + d4.X2;
+                                       V = d4.V})
 
 
     let Z4VTo3Tuple (stride:int) (coords:seq<LS2V<int,float32>>) =

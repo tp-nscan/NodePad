@@ -133,11 +133,13 @@ module RingEbuilders =
                     (fun x y -> temp.[x*ringGroupRandInitParams.GroupCount + y])
 
 
+    let BuildMatrixSize (ringBuildRandMemParams:RingBuildRandMemParams) =
+        { Sz2.X = ringBuildRandMemParams.MemSize; Y = ringBuildRandMemParams.MemCount}
+
+
     let CreateRandomMems (ringBuildRandMemParams:RingBuildRandMemParams) =
         let seq = (GenS.SeqOfRandBUF32 0.5f (GenV.Twist(ringBuildRandMemParams.RandSeed)))
-        MatrixUt.DenseFromSeq ringBuildRandMemParams.MemSize
-                ringBuildRandMemParams.MemCount 
-                seq
+        MatrixUt.DenseFromSeq (BuildMatrixSize ringBuildRandMemParams ) seq
 
 
     let CreateSynapses (createSynapseParams:CreateSynapseParams) =

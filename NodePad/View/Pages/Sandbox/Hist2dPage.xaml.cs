@@ -1,7 +1,6 @@
-﻿using NodePad.ViewModel.Design.Common;
-using NodePad.ViewModel.Pages.Sandbox;
-using FirstFloor.ModernUI.Windows;
+﻿using FirstFloor.ModernUI.Windows;
 using FirstFloor.ModernUI.Windows.Navigation;
+using NodePad.ViewModel.Pages.Sandbox;
 
 namespace NodePad.View.Pages.Sandbox
 {
@@ -13,7 +12,7 @@ namespace NodePad.View.Pages.Sandbox
         public Hist2dPage()
         {
             InitializeComponent();
-            DataContext = new Hist2dPageVm();
+            DataContext = new Hist2dPageVm(10);
         }
 
         public void OnFragmentNavigation(FragmentNavigationEventArgs e)
