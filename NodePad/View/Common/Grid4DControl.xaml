@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-   d:DataContext="{d:DesignInstance Type=common1:Grid4DVmD, IsDesignTimeCreatable=True}">
+    d:DataContext="{d:DesignInstance Type=common1:Grid4DVmD, IsDesignTimeCreatable=True}">
 
     <Border BorderThickness="1" BorderBrush="Gray">
         <Grid>

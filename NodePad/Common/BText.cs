@@ -29,5 +29,9 @@ namespace NodePad.Common
             return r.MaxY - r.MinY;
         }
 
+        public static float Mid(this I<float> r)
+        {
+            return (r.Max - r.Min )/ 2.0f;
+        }
     }
 }

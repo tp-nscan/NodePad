@@ -196,7 +196,16 @@ module GenBT =
 
 module GenA2 =
 
-    let RandF32 (bounds:Sz2<int>) (seed:int) = 
+    let RandSF32 (bounds:Sz2<int>) (seed:int) = 
+        let valA = GenS.SeqOfRandSF32 (GenV.Twist seed)
+                   |> Seq.take(BT.Count bounds)
+                   |> Seq.toArray
+        Array2D.init (bounds.Y) 
+                     (bounds.X) 
+                     (fun x y -> valA.[y * bounds.X + x])
+
+
+    let RandUF32 (bounds:Sz2<int>) (seed:int) = 
         let valA = GenS.SeqOfRandUF32 (GenV.Twist seed)
                    |> Seq.take(BT.Count bounds)
                    |> Seq.toArray

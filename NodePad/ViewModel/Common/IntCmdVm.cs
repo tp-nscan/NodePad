@@ -1,12 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reactive.Subjects;
+using System.Windows.Input;
 using NodePad.Common;
 
 namespace NodePad.ViewModel.Common
 {
-    public class IntVm : BindableBase, IDataErrorInfo
+    public class IntCmdVm : BindableBase, IDataErrorInfo
     {
-        public IntVm(int val, int maxVal, string caption, int minVal)
+        private readonly Subject<int> _valueChanged = new Subject<int>();
+        public IObservable<int> OnValueChanged => _valueChanged;
+
+        public IntCmdVm(int val, int maxVal, string caption, int minVal)
         {
             IntVal = val;
             StrVal = IntVal.ToString();
@@ -27,8 +32,30 @@ namespace NodePad.ViewModel.Common
         public int MinVal { get; private set; }
 
         public int MaxVal { get; private set; }
-
+        
         public string Caption { get; private set; }
+
+        #region UpdateCommand
+
+        RelayCommand _updateCommand;
+
+        public ICommand UpdateCommand => _updateCommand ?? (_updateCommand = new RelayCommand(
+            DoUpdate,
+            CanUpdate
+            ));
+
+        private void DoUpdate()
+        {
+            IntVal = int.Parse(_strVal);
+            _valueChanged.OnNext(IntVal);
+        }
+
+        bool CanUpdate()
+        {
+            return Error == String.Empty;
+        }
+
+        #endregion // UpdateCommand
 
         public string this[string columnName]
         {
@@ -42,7 +69,7 @@ namespace NodePad.ViewModel.Common
                 return String.Empty;
             }
         }
-
+        
         public string Error => this["StrVal"];
 
         static string IntZ(string val, int minVal, int maxVal)

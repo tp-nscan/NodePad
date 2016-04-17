@@ -15,11 +15,14 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="50*"/>
             </Grid.RowDefinitions>
 
+            
+            
             <Border x:Name="wbGrid"
-                Grid.Row="1"
+                Grid.Row="2"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource ButtonText}">
 
@@ -37,6 +40,10 @@
                     <TextBlock Text="{Binding Title}" />
                 </StackPanel>
             </Viewbox>
+
+            <common:LegendControl Grid.Row="1" DataContext="{Binding LegendVm}" />
+
+
         </Grid>
     </Border>
     

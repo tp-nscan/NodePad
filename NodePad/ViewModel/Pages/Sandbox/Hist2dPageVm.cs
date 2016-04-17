@@ -12,7 +12,7 @@ namespace NodePad.ViewModel.Pages.Sandbox
         public Hist2dPageVm(int count)
         {
             Hist2DVm = new Hist2DVm(Hist2DvmD.BinCts, Hist2DvmD. ColorLegT, "Design title");
-            CountVm = new IntVm(count, 10000000, "Count", 0);
+            CountVm = new IntCmdVm(count, 10000000, "Count", 0);
             CountVm.OnValueChanged.Subscribe(ResetVals);
         }
 
@@ -33,6 +33,6 @@ namespace NodePad.ViewModel.Pages.Sandbox
             }
         }
 
-        public IntVm CountVm { get; }
+        public IntCmdVm CountVm { get; }
     }
 }

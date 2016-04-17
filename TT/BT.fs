@@ -417,7 +417,7 @@ module A2dUt =
         }
 
 
-    let ToP2V (a2d:'a[,]) =
+    let ToP2V<'a> (a2d:'a[,]) =
         seq { for row in 0 .. (a2d.GetLength 0) - 1 do
                 for col in 0 .. (a2d.GetLength 1) - 1 do
                     yield {P2V.X = col; Y=row; V= a2d.[row, col]}

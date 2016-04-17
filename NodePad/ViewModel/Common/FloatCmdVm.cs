@@ -1,13 +1,18 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reactive.Subjects;
+using System.Windows.Input;
 using NodePad.Common;
 
 namespace NodePad.ViewModel.Common
 {
-    public class FloatVm : BindableBase, IDataErrorInfo
+    public class FloatCmdVm : BindableBase, IDataErrorInfo
     {
-        public FloatVm(float val, float minVal, float maxVal, string caption)
+        private readonly Subject<float> _valueChanged = new Subject<float>();
+        public IObservable<float> OnValueChanged => _valueChanged;
+
+        public FloatCmdVm(float val, float minVal, float maxVal, string caption)
         {
             FloatVal = val;
             StrVal = FloatVal.ToString(CultureInfo.InvariantCulture);
@@ -30,6 +35,28 @@ namespace NodePad.ViewModel.Common
         public float MaxVal { get; private set; }
 
         public string Caption { get; private set; }
+
+        #region UpdateCommand
+
+        RelayCommand _updateCommand;
+
+        public ICommand UpdateCommand => _updateCommand ?? (_updateCommand = new RelayCommand(
+            DoUpdate,
+            CanUpdate
+            ));
+
+        private void DoUpdate()
+        {
+            FloatVal = float.Parse(_strVal);
+            _valueChanged.OnNext(FloatVal);
+        }
+
+        bool CanUpdate()
+        {
+            return Error == String.Empty;
+        }
+
+        #endregion // UpdateCommand
 
         public string this[string columnName]
         {

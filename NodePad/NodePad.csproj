@@ -90,7 +90,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Star.cs" />
+    <Compile Include="Model\StarGrid.cs" />
+    <Compile Include="Model\StarProcs.cs" />
     <Compile Include="ViewModel\Common\FloatVm.cs" />
+    <Compile Include="ViewModel\Common\IntVm.cs" />
+    <Compile Include="ViewModel\Design\Common\SliderVmD.cs" />
+    <Compile Include="ViewModel\Common\FloatCmdVm.cs" />
     <Compile Include="ViewModel\Common\GraphVm.cs" />
     <Compile Include="ViewModel\Common\Grid2DVm.cs" />
     <Compile Include="ViewModel\Common\Grid4DVm.cs" />
@@ -100,7 +105,8 @@
     <Compile Include="ViewModel\Common\ItemSelectorVm.cs" />
     <Compile Include="ViewModel\Common\LegendVm.cs" />
     <Compile Include="ViewModel\Common\ProjectionControlVm.cs" />
-    <Compile Include="ViewModel\Common\IntVm.cs" />
+    <Compile Include="ViewModel\Common\IntCmdVm.cs" />
+    <Compile Include="ViewModel\Common\SliderVm.cs" />
     <Compile Include="ViewModel\Common\Sz2IntVm.cs" />
     <Compile Include="ViewModel\Common\WbImageData.cs" />
     <Compile Include="ViewModel\Common\WbImageVm.cs" />
@@ -112,6 +118,7 @@
     <Compile Include="ViewModel\Design\Common\Hist2DVmD.cs" />
     <Compile Include="ViewModel\Design\Common\LegendVmD.cs" />
     <Compile Include="ViewModel\Design\Common\ProjectionControlVmD.cs" />
+    <Compile Include="ViewModel\Design\Pages\RingPageVmD.cs" />
     <Compile Include="ViewModel\Pages\CPU\RingPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\ControlPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\GraphPageVm.cs" />
@@ -138,7 +145,10 @@
     <Compile Include="View\Common\Hist2DControl.xaml.cs">
       <DependentUpon>Hist2DControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Common\TextBoxCtrl.cs" />
+    <Compile Include="View\Common\SliderControl.xaml.cs">
+      <DependentUpon>SliderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Common\TextBoxCmdControl.cs" />
     <Compile Include="View\Common\LegendControl.xaml.cs">
       <DependentUpon>LegendControl.xaml</DependentUpon>
     </Compile>
@@ -146,6 +156,7 @@
       <DependentUpon>ProjectionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Common\Sz2IntCtrl.cs" />
+    <Compile Include="View\Common\TextBoxControl.cs" />
     <Compile Include="View\Common\WbImage.xaml.cs">
       <DependentUpon>WbImage.xaml</DependentUpon>
     </Compile>
@@ -247,6 +258,10 @@
     <Page Include="View\Common\ProjectionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Common\SliderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Common\WbImage.xaml">
       <Generator>MSBuild:Compile</Generator>

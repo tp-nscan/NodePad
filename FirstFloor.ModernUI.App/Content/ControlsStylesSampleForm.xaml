@@ -134,6 +134,7 @@
 
                 <Button Content="Submit" Margin="100,16,0,0" HorizontalAlignment="Left" />
             </StackPanel>
+            
         </StackPanel>
     </ScrollViewer>
 </UserControl>

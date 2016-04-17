@@ -15,6 +15,14 @@ namespace NodePad.ViewModel.Common
             ColorLeg = colorLeg;
             WbImageVm = new WbImageVm();
             Title = title;
+            LegendVm = new LegendVm(
+                minVal: "<" + colorLeg.minV,
+                midVal: ColorSets.GetLegMidVal(colorLeg).ToString(),
+                maxVal: ">" + colorLeg.maxV,
+                minCol: colorLeg.minC,
+                midColors: colorLeg.spanC,
+                maxColor: colorLeg.maxC
+                );
         }
         
         private WbImageVm _wbImageVm;
@@ -32,6 +40,16 @@ namespace NodePad.ViewModel.Common
         public ColorLeg<T> ColorLeg { get;}
 
         public List<P2V<int,T>> Values { get; private set; }
+
+        private LegendVm _legendVm;
+        public LegendVm LegendVm
+        {
+            get { return _legendVm; }
+            set
+            {
+                SetProperty(ref _legendVm, value);
+            }
+        }
 
         public void UpdateData(IEnumerable<P2V<int,T>> values)
         {

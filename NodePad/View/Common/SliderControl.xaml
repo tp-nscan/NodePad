@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="NodePad.View.Common.SliderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common1="clr-namespace:NodePad.ViewModel.Design.Common"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance {x:Type common1:SliderVmD}, IsDesignTimeCreatable=True}"
+             d:DesignWidth="300">
+    <Border>
+        <Grid Margin="0,2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="16"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Padding="5,0"
+                TextAlignment="Center" 
+                Text="{Binding Title}" 
+                HorizontalAlignment="Center"/>
+
+            <Slider
+                Delay="50"
+                Grid.Row="1"
+                Value="{Binding Value}" 
+                Minimum="{Binding Interval.Min}" 
+                Maximum="{Binding Interval.Max}" 
+                IsSnapToTickEnabled="True" 
+                TickFrequency="{Binding TickFrequency}"/>
+
+            <Grid Grid.Row="2" Margin="0,-6,0,0">
+
+                <TextBlock 
+                    Padding="0" Text="{Binding LegendMinimum}" 
+                    HorizontalAlignment="Left" 
+                    Margin="5,0,0,0" 
+                    VerticalAlignment="Top"/>
+
+                <TextBlock
+                    Padding="0"  
+                    Margin="0"
+                    Text="{Binding LegendValue}" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Center" />
+
+                <TextBlock
+                    Padding="5,0"  Text="{Binding LegendMaximum}" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Top" />
+
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

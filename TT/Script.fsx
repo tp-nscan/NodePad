@@ -163,6 +163,8 @@ ColorSets.ColStr Colors.Red
 
 ColorSets.QuadColorRing 2 Colors.Black Colors.White Colors.Red Colors.Blue |> Seq.toArray |> Array.map(fun c -> ColorSets.ColStr c)
 
+ColorSets.QuadColorRing 63 Colors.Black Colors.White Colors.Red Colors.Blue |> Seq.toArray |> Array.length
+
 //
 //ColorSets.ColorSpan 1 Colors.Black Colors.White |> Seq.toArray |> Array.map(fun c -> ColorSets.ColStr c)
 //

@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <common:TextBoxCtrl DataContext="{Binding CountVm}" />
+        <common:TextBoxCmdControl DataContext="{Binding CountVm}" />
         <common:Hist2DControl Grid.Row="1" DataContext="{Binding Hist2DVm}" />
     </Grid>
 

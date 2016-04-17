@@ -79,6 +79,10 @@ module ColorSets =
             |> Seq.append(seq { yield colorA })
 
 
+    let QuadColorSpan256 =
+        QuadColorRing 63 Colors.Red Colors.White Colors.Blue Colors.Black |> Seq.toArray
+
+
     let ColStr (col:Color) = 
         sprintf "[%i, %i, %i]" col.R col.G col.B
         
@@ -87,6 +91,12 @@ module ColorSets =
         { minC=Colors.Black; maxC=Colors.Green; 
           spanC=RedBlueSpan; mapper=Partition.SF32to256; 
           minV= -1.0f; maxV=0.999f; tics=Partition.SF32Tics256 }
+
+
+    let QuadColorUFLeg =
+        { minC=Colors.Green; maxC=Colors.Orange; 
+          spanC=QuadColorSpan256; mapper=Partition.UF32to256; 
+          minV= 0.0f; maxV=0.999f; tics=Partition.UF32Tics256 }
 
 
     // 0.25 < beta < 0.75
