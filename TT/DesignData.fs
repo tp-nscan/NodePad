@@ -221,6 +221,35 @@ module DesignData =
              V = ( float32 (p.X + p.Y * strides.X)) / denom - 1.0f})
 
 
+    let PlotModUFDelta =
+      let leg = ColorSets.RedBlueSFLeg
+      let strides = {Sz2.X=100; Sz2.Y=100}
+
+//      let valueFor x y =
+//        let lhs = (float32 (x-50)) / 50.0f
+//        let rhs = (float32 (y-50)) / 50.0f
+//        NNfunc.ModUFDelta lhs rhs
+
+      let valueFor =
+        NNfunc.MStretchO 12.0f 0.2f
+
+//      A2dUt.Raster2d strides |> Seq.map(fun p ->
+//           { 
+//             P2V.X = (float32 (p.X-50)) / 50.0f; 
+//                 Y = (float32 (p.Y-50)) / 50.0f; 
+//                 V = ColorSets.GetLegColor leg (valueFor p.X p.Y)
+//           })
+
+      A2dUt.Raster2d strides |> Seq.map(fun p ->
+           let xf = (float32 (p.X-50)) / 50.0f
+           let yf = (float32 (p.Y-50)) / 50.0f
+           { 
+             P2V.X = xf; 
+                 Y = yf; 
+                 V = ColorSets.GetLegColor leg (NNfunc.Cached.StretchO xf yf)
+           })
+
+
     let GradientStarAs2d (strides:Sz2<int>) =
         (Grid2dCnxn.GradientStar strides)
         |> Grid2dCnxn.Cnx4dVToCnx2d strides.X
@@ -229,3 +258,7 @@ module DesignData =
     let NoiseyStarAs2d bounds =
         Grid2dCnxn.NoiseyLocalRing bounds 127 0.0f 0.5f
         |> Grid2dCnxn.Cnx4dVToCnx2d bounds.X
+
+
+    let Noisey2D2IGrid bounds =
+        None

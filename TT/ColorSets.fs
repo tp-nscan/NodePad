@@ -3,11 +3,11 @@ open System
 open System.Windows.Media
 
 type ColorLeg<'a> = 
-    { minC:Color; maxC:Color; spanC:Color[]; mapper:'a->int; minV:'a; maxV:'a;
+    { minC:Color; maxC:Color; spanC:Color[]; mapper:'a->int; range:I<'a>;
       tics: 'a[] }
 
 type BrushLeg<'a> = 
-    { minB:Brush; maxB:Brush; spanB:SolidColorBrush[]; mapper:'a->int; minV:'a; maxV:'a;
+    { minB:Brush; maxB:Brush; spanB:SolidColorBrush[]; mapper:'a->int; range:I<'a>;
       tics: 'a[] }
 
 module ColorSets =
@@ -43,8 +43,17 @@ module ColorSets =
                 ByteInterp colStart.B colEnd.B (stepCount + 1) step))
 
 
-    let RedBlueSpan =
-        ColorSpan 256 Colors.Red Colors.Blue |> Seq.toArray
+    let BlueSpan256 =
+        let btwStp = ColorSpan 256
+        (btwStp Colors.Black Colors.Blue) 
+            |> Seq.toArray
+
+
+    let RedBlueSpan256 =
+        let btwStp = ColorSpan 128
+        (btwStp Colors.Black Colors.Blue) 
+            |> Seq.append(btwStp Colors.Red Colors.Black)
+            |> Seq.toArray
 
 
     let TriColorStrip (interStep:int) (colorA:Color) (colorB:Color) (colorC:Color) =
@@ -87,16 +96,22 @@ module ColorSets =
         sprintf "[%i, %i, %i]" col.R col.G col.B
         
 
+    let BlueUFLeg =
+        { minC=Colors.Pink; maxC=Colors.Yellow; 
+          spanC=BlueSpan256; mapper=Partition.UF32to256; 
+          range={I.Min=0.0f; Max=1.0f}; tics=Partition.UF32Tics256 }
+
+
     let RedBlueSFLeg =
         { minC=Colors.Black; maxC=Colors.Green; 
-          spanC=RedBlueSpan; mapper=Partition.SF32to256; 
-          minV= -1.0f; maxV=0.999f; tics=Partition.SF32Tics256 }
+          spanC=RedBlueSpan256; mapper=Partition.SF32to256; 
+          range={I.Min= -1.0f; Max=1.0f}; tics=Partition.SF32Tics256 }
 
 
     let QuadColorUFLeg =
         { minC=Colors.Green; maxC=Colors.Orange; 
           spanC=QuadColorSpan256; mapper=Partition.UF32to256; 
-          minV= 0.0f; maxV=0.999f; tics=Partition.UF32Tics256 }
+          range={I.Min=0.0f; Max=1.0f}; tics=Partition.UF32Tics256 }
 
 
     // 0.25 < beta < 0.75
@@ -108,8 +123,8 @@ module ColorSets =
 
         let maxTic = tics.[tics.Length - 1]
         { minC=Colors.LightYellow; maxC=Colors.HotPink; 
-          spanC=WcColors; mapper=(Partition.BinOfA tics); 
-          minV=1; maxV=(int maxTic); tics=tics }
+          spanC=WcColors; mapper=(Partition.BinOfA tics);
+          range={I.Min=1; Max=(int maxTic)}; tics=tics }
 
 
     let WcHistLegInts (vals:int[]) =
@@ -118,10 +133,10 @@ module ColorSets =
 
 
     let GetLegColor<'a when 'a:comparison> (lm:ColorLeg<'a>) (value:'a) =
-        if (value < lm.minV) then lm.minC
-        else if (value < lm.maxV) then lm.spanC.[lm.mapper value] 
+        if (value < lm.range.Min) then lm.minC
+        else if (value < lm.range.Max) then lm.spanC.[lm.mapper value] 
         else lm.maxC
-        
+
 
     let GetLegMidVal<'a when 'a:comparison> (lm:ColorLeg<'a>) =
         lm.tics.[(int (lm.tics.GetLength(0) / 2))]

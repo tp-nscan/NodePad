@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Windows.Controls;
 using System.Windows.Media;
 using NodePad.ViewModel.Common;
 using TT;
@@ -29,14 +30,17 @@ namespace NodePad.ViewModel.Design.Common
         {
             get
             {
-                return ColorSets.RedBlueSpan
-                        .ToList()
-                        .Select((c, i) => new P2V<float, Color>(
-                                            x: i,
-                                            y: i,
-                                            v: c
-                            )
-                         );
+                return DesignData.PlotModUFDelta;
+
+                //return Enumerable.Empty<P2V<float, Color>>();
+                //return ColorSets.RedBlueSpan
+                //        .ToList()
+                //        .Select((c, i) => new P2V<float, Color>(
+                //                            x: i,
+                //                            y: i,
+                //                            v: c
+                //            )
+                //         );
             }
         }
 
@@ -47,19 +51,19 @@ namespace NodePad.ViewModel.Design.Common
                 return
 
 
-                        //Enumerable.Empty<RV<float, Color>>();
+                   Enumerable.Empty<RV<float, Color>>();
 
 
-                   ColorSets.RedBlueSpan
-                    .ToList()
-                    .Select((c, i) => new RV<float, Color>(
-                                        minX: 200 - i * 2,
-                                        minY: i * 2,
-                                        maxX: 200 - i * 2 + RectSize,
-                                        maxY: i * 2 + RectSize,
-                                        v: c
-                        )
-                     );
+                   ////ColorSets.RedBlueSpan
+                   //// .ToList()
+                   //// .Select((c, i) => new RV<float, Color>(
+                   ////                     minX: 200 - i * 2,
+                   ////                     minY: i * 2,
+                   ////                     maxX: 200 - i * 2 + RectSize,
+                   ////                     maxY: i * 2 + RectSize,
+                   ////                     v: c
+                   ////     )
+                   ////  );
             }
         }
 

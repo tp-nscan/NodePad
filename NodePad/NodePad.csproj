@@ -89,11 +89,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\CommandBase.cs" />
     <Compile Include="Model\Star.cs" />
+    <Compile Include="Model\Star2.cs" />
+    <Compile Include="Model\Star2Grid.cs" />
     <Compile Include="Model\StarGrid.cs" />
     <Compile Include="Model\StarProcs.cs" />
     <Compile Include="ViewModel\Common\FloatVm.cs" />
+    <Compile Include="ViewModel\Common\Grid2D2IVm.cs" />
     <Compile Include="ViewModel\Common\IntVm.cs" />
+    <Compile Include="ViewModel\Design\Common\Grid2D2IVmD.cs" />
     <Compile Include="ViewModel\Design\Common\SliderVmD.cs" />
     <Compile Include="ViewModel\Common\FloatCmdVm.cs" />
     <Compile Include="ViewModel\Common\GraphVm.cs" />
@@ -119,9 +124,12 @@
     <Compile Include="ViewModel\Design\Common\LegendVmD.cs" />
     <Compile Include="ViewModel\Design\Common\ProjectionControlVmD.cs" />
     <Compile Include="ViewModel\Design\Pages\RingPageVmD.cs" />
+    <Compile Include="ViewModel\Pages\CPU\PairsPageVm.cs" />
+    <Compile Include="ViewModel\Pages\CPU\Ring2PageVm.cs" />
     <Compile Include="ViewModel\Pages\CPU\RingPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\ControlPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\GraphPageVm.cs" />
+    <Compile Include="ViewModel\Pages\Sandbox\Grid2d2IPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\Grid2dPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\Grid4dPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\Hist1dPageVm.cs" />
@@ -160,8 +168,14 @@
     <Compile Include="View\Common\WbImage.xaml.cs">
       <DependentUpon>WbImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\CPU\Ring2Page.xaml.cs">
+      <DependentUpon>Ring2Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\CPU\RingPage.xaml.cs">
       <DependentUpon>RingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\CPU\PairsPageControl.xaml.cs">
+      <DependentUpon>PairsPageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\Data\ArrayDataPage.xaml.cs">
       <DependentUpon>ArrayDataPage.xaml</DependentUpon>
@@ -171,6 +185,9 @@
     </Compile>
     <Compile Include="View\Pages\Sandbox\GraphPage.xaml.cs">
       <DependentUpon>GraphPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Sandbox\Grid2d2IPage.xaml.cs">
+      <DependentUpon>Grid2d2IPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\Sandbox\Grid2dPage.xaml.cs">
       <DependentUpon>Grid2dPage.xaml</DependentUpon>
@@ -267,7 +284,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Pages\CPU\Ring2Page.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Pages\CPU\RingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\CPU\PairsPageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +307,10 @@
     <Page Include="View\Pages\Sandbox\GraphPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\Sandbox\Grid2d2IPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\Sandbox\Grid2dPage.xaml">
       <Generator>MSBuild:Compile</Generator>

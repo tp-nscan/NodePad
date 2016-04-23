@@ -18,6 +18,7 @@
                 <mui:Link DisplayName="Controls" Source="/View/Pages/Sandbox/ControlPage.xaml" />
                 <mui:Link DisplayName="Graph" Source="/View/Pages/Sandbox/GraphPage.xaml" />
                 <mui:Link DisplayName="Grid2d" Source="/View/Pages/Sandbox/Grid2dPage.xaml" />
+                <mui:Link DisplayName="Grid2d2I" Source="/View/Pages/Sandbox/Grid2d2IPage.xaml" />
                 <mui:Link DisplayName="Grid4d" Source="/View/Pages/Sandbox/Grid4dPage.xaml" />
                 <mui:Link DisplayName="Hist1d" Source="/View/Pages/Sandbox/Hist1dPage.xaml" />
                 <mui:Link DisplayName="Hist2d" Source="/View/Pages/Sandbox/Hist2dPage.xaml" />
@@ -28,6 +29,8 @@
         <mui:LinkGroup DisplayName="CPU">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="Ring" Source="/View/Pages/CPU/RingPage.xaml" />
+                <mui:Link DisplayName="Ring2" Source="/View/Pages/CPU/Ring2Page.xaml" />
+                <mui:Link DisplayName="Pairs" Source="View/Pages/CPU/PairsPageControl.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         

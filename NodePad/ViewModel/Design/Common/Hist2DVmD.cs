@@ -20,7 +20,8 @@ namespace NodePad.ViewModel.Design.Common
 
         public static Sz2<int> BinCts => new Sz2<int>(100,100);
 
-        public static R<float> TestBounds => new R<float>(minX:-1.0f, maxX:2.2f, minY:1.2f, maxY:3.4f);
+        public static R<float> TestBounds => 
+            new R<float>(minX:-1.0f, maxX:2.2f, minY:1.2f, maxY:3.4f);
 
         public static Func<int[], ColorLeg<int>> ColorLegT => 
              ColorSets.WcHistLegInts;

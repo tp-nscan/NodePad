@@ -36,8 +36,8 @@ module GenS =
         Seq.initInfinite ( fun i -> rng.Next(n))
 
 
-    let NormalF (rnd:Random) (mean:float32) (stddev:float32) =
-        Normal.Samples(rnd=rnd, mean=(float mean), stddev=(float stddev))
+    let NormalF (rnd:Random) (mean:float) (stddev:float) =
+        Normal.Samples(rnd=rnd, mean=mean, stddev=stddev)
 
 
     let NormalF32 (rnd:Random) (mean:float32) (stddev:float32) =
@@ -202,7 +202,7 @@ module GenA2 =
                    |> Seq.toArray
         Array2D.init (bounds.Y) 
                      (bounds.X) 
-                     (fun x y -> valA.[y * bounds.X + x])
+                     (fun x y -> valA.[x * bounds.X + y])
 
 
     let RandUF32 (bounds:Sz2<int>) (seed:int) = 
@@ -211,7 +211,7 @@ module GenA2 =
                    |> Seq.toArray
         Array2D.init (bounds.Y) 
                      (bounds.X) 
-                     (fun x y -> valA.[y * bounds.X + x])
+                     (fun x y -> valA.[x * bounds.X + y])
 
 
     let RandInt (bounds:Sz2<int>) (maxN:int) (seed:int) = 

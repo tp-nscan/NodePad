@@ -41,8 +41,8 @@ namespace NodePad.ViewModel.Common
         RelayCommand _updateCommand;
 
         public ICommand UpdateCommand => _updateCommand ?? (_updateCommand = new RelayCommand(
-            DoUpdate,
-            CanUpdate
+            param => DoUpdate(),
+            param => CanUpdate()
             ));
 
         private void DoUpdate()

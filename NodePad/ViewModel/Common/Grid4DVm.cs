@@ -20,9 +20,9 @@ namespace NodePad.ViewModel.Common
             WbImageVm = new WbImageVm();
             Title = title;
             LegendVm = new LegendVm(
-                minVal: "<" + colorLeg.minV,
+                minVal: "<" + colorLeg.range.Min,
                 midVal: ColorSets.GetLegMidVal(colorLeg).ToString(),
-                maxVal: ">" + colorLeg.maxV,
+                maxVal: ">" + colorLeg.range.Max,
                 minCol: colorLeg.minC,
                 midColors: colorLeg.spanC,
                 maxColor: colorLeg.maxC

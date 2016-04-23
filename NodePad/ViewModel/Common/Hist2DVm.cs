@@ -111,9 +111,9 @@ namespace NodePad.ViewModel.Common
             var counts = bins.Select(b => b.V.V).ToArray();
             var colorLeg = ColorLegger(counts);
             LegendVm = new LegendVm(
-                minVal: "<" + colorLeg.minV,
+                minVal: "<" + colorLeg.range.Min,
                 midVal: ColorSets.GetLegMidVal(colorLeg).ToString(),
-                maxVal: ">" + colorLeg.maxV,
+                maxVal: ">" + colorLeg.range.Max,
                 minCol: colorLeg.minC,
                 midColors: colorLeg.spanC,
                 maxColor: colorLeg.maxC

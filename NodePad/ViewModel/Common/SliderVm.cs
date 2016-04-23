@@ -25,11 +25,7 @@ namespace NodePad.ViewModel.Common
         public string Title
         {
             get { return _title; }
-            set
-            {
-                _title = value;
-                OnPropertyChanged("Title");
-            }
+            set { SetProperty(ref _title, value); }
         }
 
         public string LegendMaximum => Interval.Max.ToString(NumberFormat);
@@ -38,17 +34,16 @@ namespace NodePad.ViewModel.Common
 
         public string LegendValue => Value.ToString(NumberFormat);
 
-        private double _value;
-        public double Value
+        private float _value;
+        public float Value
         {
             get { return _value; }
             set
             {
-                _value = value;
+                if (!SetProperty(ref _value, value)) return;
                 _sliderVmChanged.OnNext(this);
-                IsDirty = true;
-                OnPropertyChanged("Value");
                 OnPropertyChanged("LegendValue");
+                IsDirty = true;
             }
         }
 

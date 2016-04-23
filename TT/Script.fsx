@@ -70,6 +70,9 @@ open MathNet.Numerics.Random
 #load "Gen.fs"
 open TT
 
+let rA = GenA2.RandSF32 {Sz2.X=4; Y=3} 123
+A2dUt.GetColumn rA 0
+
 //let k = (GenBT.TestP2 123 230) |> Seq.toArray
 //k |> Seq.toArray
 (GenBT.TestP2 12 150000) |> Seq.toArray |> BT.BoundingRP BT.AntiRofF32
@@ -159,9 +162,14 @@ open MathNet.Numerics.Random
 
 open TT
 
-ColorSets.ColStr Colors.Red
+ColorSets.RedBlueSpan256
+    |> Seq.toArray 
+    |> Array.map(fun c -> ColorSets.ColStr c)
 
-ColorSets.QuadColorRing 2 Colors.Black Colors.White Colors.Red Colors.Blue |> Seq.toArray |> Array.map(fun c -> ColorSets.ColStr c)
+
+ColorSets.QuadColorRing 2 Colors.Black Colors.White Colors.Red Colors.Blue 
+    |> Seq.toArray 
+    |> Array.map(fun c -> ColorSets.ColStr c)
 
 ColorSets.QuadColorRing 63 Colors.Black Colors.White Colors.Red Colors.Blue |> Seq.toArray |> Array.length
 
@@ -244,10 +252,10 @@ ColorSets.QuadColorRing 63 Colors.Black Colors.White Colors.Red Colors.Blue |> S
 #load "BT.fs"
 #load "Gen.fs"
 #load "Partition.fs"
-#load "DesignData.fs"
 #load "MathNetUtils.fs"
 #load "MathNetConv.fs"
 #load "Grid2dCnxn.fs"
+#load "DesignData.fs"
 open TT
 
 let bounds = {Sz2.X=5; Y=4}
@@ -264,3 +272,44 @@ A2dUt.Raster2d {Sz2.X=5; Y=4} |> Seq.toArray
 
 open System
 let g = Guid.Parse("d09fb93d-f22d-4878-94c3-425be1ce270f")
+
+
+//#r @"..\packages\MathNet.Numerics.3.11.0\lib\net40\MathNet.Numerics.dll"
+//#r @"..\packages\MathNet.Numerics.FSharp.3.11.0\lib\net40\MathNet.Numerics.FSharp.dll"
+//#r @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\PresentationCore.dll"
+//
+//
+//#load "BT.fs"
+//#load "Gen.fs"
+//open TT
+//
+//let ts = GenS.NormalSF32 (GenV.Twist 113) 0.0f 0.85f |> Seq.take(1000000) |> Seq.toArray
+//let mutable res = 3.0f
+//#time
+//for j in 0 .. 99 do
+//    for i in 0 .. 999999 do
+//        res <- NumUt.ModUF ts.[i]
+
+
+
+#r @"..\packages\MathNet.Numerics.3.11.0\lib\net40\MathNet.Numerics.dll"
+#r @"..\packages\MathNet.Numerics.FSharp.3.11.0\lib\net40\MathNet.Numerics.FSharp.dll"
+#r @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\PresentationCore.dll"
+
+
+#load "BT.fs"
+#load "Gen.fs"
+#load "NNfunc.fs"
+
+open TT
+
+let tr = GenS.NormalUF32 (GenV.Twist 113) 0.0f 0.85f |> Seq.take(1000000) |> Seq.toArray
+let tl = GenS.NormalUF32 (GenV.Twist 113) 0.0f 0.85f |> Seq.take(1000000) |> Seq.toArray
+
+let mutable res = 3.0f
+#time
+for j in 0 .. 999 do
+    for i in 0 .. 999999 do
+        res <- NNfunc.ModUFDelta tr.[i] tl.[i]
+
+
