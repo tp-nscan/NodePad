@@ -214,6 +214,26 @@ module DesignGuids =
 
 module DesignData =
 
+
+    let DiscretP2 (bounds:P2<float>) (value:P2<float>) =
+        {P2.X = int32 ( NumUt.ModUF(value.X) * bounds.X ); 
+            Y = int32 ( NumUt.ModUF(value.Y) * bounds.Y ); }
+
+
+    let Convexo (bounds:P2<int>) (thetaOffsets: float -> P2<float>) thetaValues =
+        
+        seq { 0 .. bounds.X - 1 }
+        |> Seq.map(fun tic -> 2.0 * (float tic) * Math.PI / (float bounds.X) )
+        |> Seq.map(fun v -> let res = thetaOffsets v
+                            {P2V.X=res.X; Y=res.Y; V=thetaValues v })
+
+
+    let Circulo (bounds:P2<int>) (center:P2<float>) (radius:float) =
+        let pos = fun i-> {P2.X = center.X + radius * Math.Cos(i); 
+                              Y = center.Y + radius * Math.Sin(i); }
+        Convexo bounds pos (fun i -> 1.0)
+
+
     let Grid2dGradient (strides:Sz2<int>) =
         let denom = ( 0.5f * (float32 (strides.X * strides.Y)))
         A2dUt.Raster2d strides |> Seq.map(fun p ->
@@ -224,22 +244,6 @@ module DesignData =
     let PlotModUFDelta =
       let leg = ColorSets.RedBlueSFLeg
       let strides = {Sz2.X=100; Sz2.Y=100}
-
-//      let valueFor x y =
-//        let lhs = (float32 (x-50)) / 50.0f
-//        let rhs = (float32 (y-50)) / 50.0f
-//        NNfunc.ModUFDelta lhs rhs
-
-      let valueFor =
-        NNfunc.MStretchO 12.0f 0.2f
-
-//      A2dUt.Raster2d strides |> Seq.map(fun p ->
-//           { 
-//             P2V.X = (float32 (p.X-50)) / 50.0f; 
-//                 Y = (float32 (p.Y-50)) / 50.0f; 
-//                 V = ColorSets.GetLegColor leg (valueFor p.X p.Y)
-//           })
-
       A2dUt.Raster2d strides |> Seq.map(fun p ->
            let xf = (float32 (p.X-50)) / 50.0f
            let yf = (float32 (p.Y-50)) / 50.0f

@@ -8,7 +8,7 @@ namespace NodePad.ViewModel.Design.Common
         public Grid2D2IVmD() 
             : base(TestStrides, ColorSets2I.QuadColorUFLeg2I, "Design title")
         {
-            UpdateData(DesignData.Noisey2D2IGrid(TestStrides));
+           // UpdateData(DesignData.Noisey2D2IGrid(TestStrides));
         }
 
         public static Sz2<int> TestStrides = new Sz2<int>(10, 10);

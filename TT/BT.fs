@@ -59,11 +59,19 @@ module NumUt =
         else value
 
 
-    let rec ModUF value =
+    let rec ModUF32 value =
         if ((value > 1.0f) || (value < 0.0f) ) then 
-            value - (float32 (Math.Floor ((float value))))
+            value - (float32 (Math.Floor (float value)))
         else
             value
+
+
+    let rec ModUF value =
+        if ((value > 1.0) || (value < 0.0) ) then 
+            value - Math.Floor(value)
+        else
+            value
+
 
     let FloatToUF value =
         if value < 0.0 then 0.0f

@@ -43,7 +43,7 @@ namespace NodePad.Model
 
         public void Update(float step, float noise)
         {
-            CurValue = NumUt.ModUF(CurValue + Delta * step + noise);
+            CurValue = NumUt.ModUF32(CurValue + Delta * step + noise);
         }
 
     }

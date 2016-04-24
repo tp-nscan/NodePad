@@ -57,7 +57,7 @@ namespace NodePad.Model
                          AbsDelta * absDeltaToNoise + 
                          NoiseFieldCpl * nfCpl;
 
-            CurValue = NumUt.ModUF(CurValue + Delta * step + noise * NoiseField);
+            CurValue = NumUt.ModUF32(CurValue + Delta * step + noise * NoiseField);
 
         }
 

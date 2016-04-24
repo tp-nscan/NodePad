@@ -288,7 +288,7 @@ let g = Guid.Parse("d09fb93d-f22d-4878-94c3-425be1ce270f")
 //#time
 //for j in 0 .. 99 do
 //    for i in 0 .. 999999 do
-//        res <- NumUt.ModUF ts.[i]
+//        res <- NumUt.ModUF32 ts.[i]
 
 
 
@@ -313,3 +313,10 @@ for j in 0 .. 999 do
         res <- NNfunc.ModUFDelta tr.[i] tl.[i]
 
 
+
+#load "BT.fs"
+open TT
+
+let DiscretP2 (bounds:P2<float>) (value:P2<float>) =
+    {P2.X = int32 ( NumUt.ModUF(value.X) * bounds.X ); 
+        Y = int32 ( NumUt.ModUF(value.Y) * bounds.Y ); }
