@@ -315,8 +315,29 @@ for j in 0 .. 999 do
 
 
 #load "BT.fs"
+open System
 open TT
 
-let DiscretP2 (bounds:P2<float>) (value:P2<float>) =
+let DiscretP2 (bounds:Sz2<float>) (value:P2<float>) =
     {P2.X = int32 ( NumUt.ModUF(value.X) * bounds.X ); 
         Y = int32 ( NumUt.ModUF(value.Y) * bounds.Y ); }
+
+let Convexo (bounds:Sz2<int>) (thetaOffsets: float -> P2<float>) thetaValues =
+    seq { 0 .. 4 * bounds.X - 1 }
+    |> Seq.map(fun tic -> 0.5 * (float tic) * Math.PI / (float bounds.X) )
+    |> Seq.map(fun v -> let res = DiscretP2 (NumUt.Sz2IntToFloat bounds) (thetaOffsets v)
+                        { P2V.X=res.X; Y=res.Y; V=thetaValues v })
+    |> Seq.distinctBy(fun v -> (v.X, v.Y))
+
+let CirculoPts (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+    let pos = fun i-> {P2.X = center.X + radius * Math.Cos(i); 
+                            Y = center.Y + radius * Math.Sin(i); }
+    Convexo bounds pos (fun i -> (float32 (Math.Sin(i))))
+
+
+let boundo = {Sz2.X=16; Y=17}
+let centro = {P2.X=0.6; Y=0.7}
+
+let aa = CirculoPts boundo centro 0.4 |> Seq.toArray
+
+aa |> Array.length

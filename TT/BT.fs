@@ -90,6 +90,15 @@ module NumUt =
         else b
 
 
+    let Sz2IntToFloat (s2:Sz2<int>) =
+        {Sz2.X = (float s2.X); Y = (float s2.Y)}
+
+
+    let Sz2IntToFloat32 (s2:Sz2<int>) =
+        {Sz2.X = (float32 s2.X); Y = (float32 s2.Y)}
+
+
+
 
 module BT =
 
