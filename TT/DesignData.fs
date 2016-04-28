@@ -219,29 +219,49 @@ module DesignData =
             Y = int32 ( NumUt.ModUF(value.Y) * bounds.Y ); }
 
 
-    let Convexo (bounds:Sz2<int>) (thetaOffsets: float -> P2<float>) thetaValues =
+    let Convexo (bounds:Sz2<int>) (thetaOffsets: float -> P2<float>) thetaFunc =
         seq { 0 .. 4 * bounds.X - 1 }
         |> Seq.map(fun tic -> 0.5 * (float tic) * Math.PI / (float bounds.X) )
         |> Seq.map(fun v -> let res = DiscretP2 (NumUt.Sz2IntToFloat bounds) (thetaOffsets v)
-                            { P2V.X=res.X; Y=res.Y; V=thetaValues v })
+                            { P2V.X=res.X; Y=res.Y; V= thetaFunc v })
         |> Seq.distinctBy(fun v -> (v.X, v.Y))
 
 
-    let CirculoPts (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+    let CirculoPts (bounds:Sz2<int>) (center:P2<float>) (radius:float)
+                   thetaFunc =
         let pos = fun i-> {P2.X = center.X + radius * Math.Cos(i); 
-                                Y = center.Y + radius * Math.Sin(i); }
-        Convexo bounds pos (fun i -> (float32 (Math.Sin(i))))
+                              Y = center.Y + radius * Math.Sin(i); }
+        Convexo bounds pos thetaFunc
 
 
-    let CirculoGrid (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+    let CirculoPts1 (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+        CirculoPts bounds center radius (fun i -> 1.0f)
+
+
+    let CirculoPtsV (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+        let vFun (i:double) = (float32 (Math.Sin(i)))
+        CirculoPts bounds center radius vFun
+
+
+    let CirculoGrid (bounds:Sz2<int>) (center:P2<float>) (radius:float)
+                     thetaFunc =
        let array = Array2D.zeroCreate<float32> bounds.Y bounds.X
        let UpdateA2d (acc: float32[,]) (nuVal:P2V<int,float32>) = 
            acc.[nuVal.X, nuVal.Y] <- (float32 nuVal.V)
            acc
-       (CirculoPts bounds center radius) 
+       (CirculoPts bounds center radius thetaFunc) 
        |> Seq.fold (fun (acc: float32[,]) (v:P2V<int,float32>) -> UpdateA2d acc v ) array 
        |> ignore
        array
+
+
+    let CirculoGridV (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+       let vFun (i:double) = (float32 (Math.Sin(i)))
+       CirculoGrid bounds center radius vFun
+
+
+    let CirculoGrid1 (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
+       CirculoGrid bounds center radius (fun i -> 1.0f)
 
 
     let Grid2dGradient (strides:Sz2<int>) =

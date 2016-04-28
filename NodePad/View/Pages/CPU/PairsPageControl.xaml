@@ -79,11 +79,7 @@
 
                 <common:SliderControl Margin="0,2" Grid.Row="4" DataContext="{Binding StepSizeVm}"  />
 
-                <common:SliderControl Margin="0,2" Grid.Row="5" DataContext="{Binding NoiseFieldDecayVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="6" DataContext="{Binding DeltaNoiseCplVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="7" DataContext="{Binding NoiseFieldCplVm}"  />
+                <common:SliderControl Margin="0,2" Grid.Row="5" DataContext="{Binding FixedFieldCplVm}"  />
 
                 <StackPanel Margin="0,2" Grid.Row="8" Orientation="Horizontal">
                     <TextBlock Text="AbsDelta:"/>

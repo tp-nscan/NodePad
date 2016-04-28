@@ -9,9 +9,9 @@ namespace NodePad.ViewModel.Design.Common
         public Grid2DVmD() : base(TestStrides, ColorSets.RedBlueSFLeg, "Test title")
         {
             //UpdateData(DesignData.NoiseyStarAs2d(TestStrides));
-            UpdateData(DesignData.CirculoPts(bounds: TestStrides, 
-                                             center: new P2<double>(0.4, 0.6), 
-                                             radius:0.4));
+            UpdateData(DesignData.CirculoPtsV(bounds: TestStrides, 
+                                              center: new P2<double>(0.4, 0.6), 
+                                              radius:2.4));
             
         }
 

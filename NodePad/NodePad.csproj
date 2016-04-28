@@ -93,6 +93,10 @@
     <Compile Include="Model\Star.cs" />
     <Compile Include="Model\Star2.cs" />
     <Compile Include="Model\Star2Grid.cs" />
+    <Compile Include="Model\Star2Procs.cs" />
+    <Compile Include="Model\Star3.cs" />
+    <Compile Include="Model\Star3Grid.cs" />
+    <Compile Include="Model\Star3Procs.cs" />
     <Compile Include="Model\StarGrid.cs" />
     <Compile Include="Model\StarProcs.cs" />
     <Compile Include="ViewModel\Common\FloatVm.cs" />
