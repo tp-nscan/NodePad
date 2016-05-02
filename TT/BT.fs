@@ -510,6 +510,17 @@ module A2dUt =
             }
 
 
+    let FromP2V<'a> (bounds:Sz2<int>) (p2vs:seq<P2V<int,'a>>) =
+        let array = Array2D.zeroCreate<'a> bounds.Y bounds.X
+        let cumer (acc:'a[,]) (nuVal:P2V<int,'a>) = 
+                  acc.[nuVal.Y, nuVal.X] <- nuVal.V
+                  acc
+        p2vs |> Seq.fold (fun (acc: 'a[,]) (v:P2V<int,'a>) -> cumer acc v) array
+        |> ignore
+        array
+
+
+
 module SeqUt = 
 
     let IterB (s:System.Collections.Generic.IEnumerator<'a>) =
@@ -519,24 +530,7 @@ module SeqUt =
 
 
     let inline ZipMap f a b = Seq.zip a b |> Seq.map (fun (x,y) -> f x y)
-
-
-//    let SeqToI (vals:seq<'a>) =
-//        
-//        let itsy = vals.GetEnumerator()
-//        let mutable movin = itsy.MoveNext()
-//        if not (itsy.MoveNext()) then
-//            Seq.empty<I<'a>>
-//        else
-//            let mutable first = itsy.Current
-//            let mutable second = itsy.Current
-//            seq {
-//                    while itsy.MoveNext() do
-//                        second <- itsy.Current
-//                        yield {I.Min = first; I.Max =second}
-//                        first <- second
-//                }
-//        
+   
 
     let AddInRange min max offsets baseSeq =
         Seq.map2 (NumUt.AddInRange min max) baseSeq offsets

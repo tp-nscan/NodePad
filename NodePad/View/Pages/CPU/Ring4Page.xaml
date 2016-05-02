@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NodePad.View.Pages.CPU.Ring2Page"
+﻿<UserControl x:Class="NodePad.View.Pages.CPU.Ring4Page"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -96,7 +96,7 @@
                     <TextBlock Text="NoiseField:" FontSize="16"/>
                     <TextBlock Margin="5,0" Text="{Binding NoiseField, StringFormat=N0}" FontSize="16"/>
                 </StackPanel>
-                
+
             </Grid>
 
 
@@ -117,7 +117,7 @@
             </TabControl>
 
         </Grid>
-        
+
     </Grid>
 
 

@@ -29,10 +29,10 @@ namespace NodePad.Model
             {
                 for (var j = 0; j < cols; j++)
                 {
-                    stars[i, j].Top = stars[(i - 1 + rows) % rows, j];
-                    stars[i, j].Left = stars[i, (j - 1 + cols) % cols];
+                    stars[i, j].Top =    stars[(i - 1 + rows) % rows, j];
+                    stars[i, j].Left =   stars[i,                    (j - 1 + cols) % cols];
                     stars[i, j].Bottom = stars[(i + 1 + rows) % rows, j];
-                    stars[i, j].Right = stars[i, (j + 1 + cols) % cols];
+                    stars[i, j].Right =  stars[i,                    (j + 1 + cols) % cols];
                 }
             }
 

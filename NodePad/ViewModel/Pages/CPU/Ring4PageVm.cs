@@ -12,9 +12,9 @@ using TT;
 
 namespace NodePad.ViewModel.Pages.CPU
 {
-    public class PairsPageVm : BindableBase
+    public class Ring4PageVm : BindableBase
     {
-        public PairsPageVm()
+        public Ring4PageVm()
         {
             GridValsVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 2 Values");
 
@@ -25,24 +25,27 @@ namespace NodePad.ViewModel.Pages.CPU
             { Title = "Display Frequency", Value = 2 };
 
 
-            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000")
-            { Title = "Noise", Value = 0.03f };
+            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.5f), 0.01, "0.00")
+            { Title = "Noise", Value = 0.25f };
 
 
-            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.02, "0.00")
+            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.01, "0.00")
             { Title = "Step Size", Value = 0.1f };
 
 
-            FixedFieldCplVm = new SliderVm(new I<float>(0.0f, 4.0f), 0.002, "0.000")
-            { Title = "Fixed field cpl", Value = 0.8f };
+            NoiseFieldDecayVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00")
+            { Title = "Noise field decay", Value = 0.3f };
 
 
-            //Star3Grid = Star3Procs.RandStarGrid(Bounds,
-            //    DesignData.CirculoGrid1(Bounds, new P2<double>(0.4, 0.4), 0.3), 1293);
+            DeltaToNoiseVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00")
+            { Title = "Delta to noise", Value = 0.2f };
 
-            Star3Grid = Star3Procs.RandStarGrid(Bounds,
-                 DesignData.GradientGrid(Bounds), 123);
 
+            NoiseFieldCplVm = new SliderVm(new I<float>(0.0f, 0.4f), 0.01, "0.00")
+            { Title = "Noise field cpl", Value = 0.12f };
+
+
+            Star4Grid = Star4Procs.RandStarGrid(Bounds, 1293);
             UpdateUi();
         }
 
@@ -80,9 +83,9 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #region local vars
 
-        private static readonly int GridStride = 128;
+        private static readonly int GridStride = 180;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
-        private Star3Grid Star3Grid { get; }
+        private Star4Grid Star4Grid { get; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private bool _isRunning;
         private readonly Stopwatch _stopwatch = new Stopwatch();
@@ -96,7 +99,7 @@ namespace NodePad.ViewModel.Pages.CPU
                                      $"{_stopwatch.Elapsed.Seconds.ToString("00")}:" +
                                      $"{_stopwatch.Elapsed.Milliseconds.ToString("000")}";
 
-        public int Generation => Star3Grid.Generation;
+        public int Generation => Star4Grid.Generation;
 
         #endregion
 
@@ -121,11 +124,13 @@ namespace NodePad.ViewModel.Pages.CPU
 
                 for (var i = 0; _isRunning; i++)
                 {
-                    Star3Grid.GetDeltas();
-                    Star3Grid.Update(
+                    Star4Grid.GetDeltas();
+                    Star4Grid.Update(
                             step: StepSizeVm.Value,
                             noise: NoiseLevelVm.Value,
-                            ffCpl: FixedFieldCplVm.Value);
+                            nfDecay: NoiseFieldDecayVm.Value,
+                            absDeltaToNoise: DeltaToNoiseVm.Value,
+                            nfCpl: NoiseFieldCplVm.Value);
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {
@@ -184,12 +189,18 @@ namespace NodePad.ViewModel.Pages.CPU
 
         public SliderVm StepSizeVm { get; }
 
-        public SliderVm FixedFieldCplVm { get; }
+        public SliderVm NoiseFieldDecayVm { get; }
+
+        public SliderVm DeltaToNoiseVm { get; }
+
+        public SliderVm NoiseFieldCplVm { get; }
 
         private void UpdateUi()
         {
-            GridValsVm.UpdateData(Star3Grid.CurValuesAsP2Vs());
-            AbsDelta = A2dUt.flattenRowMajor(Star3Grid.Stars).Sum(st => st.AbsDelta);
+            GridValsVm.UpdateData(Star4Grid.CurValuesAsP2Vs());
+            GridDeltasVm.UpdateData(Star4Grid.CurDeltasAsP2Vs());
+            AbsDelta = A2dUt.flattenRowMajor(Star4Grid.Stars).Sum(st => st.AbsDelta);
+            NoiseField = A2dUt.flattenRowMajor(Star4Grid.Stars).Sum(st => st.NoiseField);
             OnPropertyChanged("Generation");
             OnPropertyChanged("ElapsedTime");
         }

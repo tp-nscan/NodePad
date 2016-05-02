@@ -243,16 +243,57 @@ module DesignData =
         CirculoPts bounds center radius vFun
 
 
+    let P2VGradientSF32 (bounds:Sz2<int>) =
+        let denom = ( 0.5f * (float32 (bounds.X * bounds.Y)))
+        A2dUt.Raster2d bounds |> Seq.map(fun p ->
+           { P2V.X= (p.X + 5) % bounds.X; Y= (p.Y + 5) % bounds.Y; 
+             V = ( float32 (p.X + p.Y * bounds.X)) / denom - 1.0f})
+
+
+    let P2VGradientUF32 (bounds:Sz2<int>) =
+        let denom = 10.0f * (float32 (bounds.X * bounds.Y))
+        A2dUt.Raster2d bounds |> Seq.map(fun p ->
+           { P2V.X=p.X; Y=p.Y; 
+             V = ( float32 (p.X + p.Y * bounds.X)) / denom })
+
+
+    let P2VRadialGradUF32 (bounds:Sz2<int>) =
+        let bxf x = (float32 x) / (float32 bounds.X)
+        let byf y = (float32 y) / (float32 bounds.Y)
+
+        let rado x y =
+            let xf = bxf x
+            let yf = byf y
+            ((xf - 0.5f) * (xf - 0.5f) + (yf - 0.5f) * (yf - 0.5f)) * 2.0f
+
+        A2dUt.Raster2d bounds |> Seq.map(fun p ->
+           { P2V.X=p.X; Y=p.Y; 
+             V = (rado p.X p.Y ) |> NumUt.ToUF})
+
+
+    let HoleFunc (holesz:float) (bounds:Sz2<int>) =
+       let bf1 (fi:float) (fj:float) =
+        (float32 (fi / ( (Math.Abs(fj)) + 0.5)))
+       let bf2 (fi:float) (fj:float) =
+        (float32 ((Math.Atan(fi / fj) + Math.PI / 2.0) / Math.PI))
+       let bf3 (fi:float) (fj:float) =
+        (float32 ((Math.Atan2(fi , fj) + Math.PI) / (2.0 * Math.PI)))
+
+       let holey i j =
+            let fi = (float i) - (float bounds.X) / 2.0
+            let fj = (float j) - (float bounds.Y) / 2.0
+            let len = Math.Sqrt(fi*fi + fj*fj)
+            if len < holesz then 0.0f
+            else bf3 fi fj
+
+       A2dUt.Raster2d bounds |> Seq.map(fun p ->
+           { P2V.X=p.X; Y=p.Y; 
+             V = (holey p.X p.Y ) |> NumUt.ModUF32})
+
+
     let CirculoGrid (bounds:Sz2<int>) (center:P2<float>) (radius:float)
                      thetaFunc =
-       let array = Array2D.zeroCreate<float32> bounds.Y bounds.X
-       let UpdateA2d (acc: float32[,]) (nuVal:P2V<int,float32>) = 
-           acc.[nuVal.X, nuVal.Y] <- (float32 nuVal.V)
-           acc
-       (CirculoPts bounds center radius thetaFunc) 
-       |> Seq.fold (fun (acc: float32[,]) (v:P2V<int,float32>) -> UpdateA2d acc v ) array 
-       |> ignore
-       array
+       A2dUt.FromP2V bounds (CirculoPts bounds center radius thetaFunc)
 
 
     let CirculoGridV (bounds:Sz2<int>) (center:P2<float>) (radius:float) =
@@ -264,11 +305,8 @@ module DesignData =
        CirculoGrid bounds center radius (fun i -> 1.0f)
 
 
-    let Grid2dGradient (strides:Sz2<int>) =
-        let denom = ( 0.5f * (float32 (strides.X * strides.Y)))
-        A2dUt.Raster2d strides |> Seq.map(fun p ->
-           { P2V.X=p.X; Y=p.Y; 
-             V = ( float32 (p.X + p.Y * strides.X)) / denom - 1.0f})
+    let GradientGrid (bounds:Sz2<int>) =
+        A2dUt.FromP2V bounds (HoleFunc 60.0 bounds)
 
 
     let PlotModUFDelta =

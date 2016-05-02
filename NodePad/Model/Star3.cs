@@ -39,7 +39,7 @@ namespace NodePad.Model
             Delta += NNfunc.ModUFDelta(CurValue, Right.CurValue);
             Delta += NNfunc.ModUFDelta(CurValue, Top.CurValue);
             Delta += NNfunc.ModUFDelta(CurValue, Bottom.CurValue);
-            Delta += NNfunc.ModUFDelta(CurValue, Bottom.CurValue);
+           // Delta += NNfunc.ModUFDelta(CurValue, Bottom.CurValue);
 
             AbsDelta = Math.Abs(DeltaL) + Math.Abs(DeltaR) + Math.Abs(DeltaT) + Math.Abs(DeltaB);
         }
