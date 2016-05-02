@@ -75,11 +75,11 @@
 
                 <common:SliderControl Margin="0,2" Grid.Row="2" DataContext="{Binding DisplayFrequencySliderVm}"  />
 
-                <common:SliderControl Margin="0,2" Grid.Row="3" DataContext="{Binding NoiseLevelVm}"  />
+                <common:SliderControl Margin="0,2" Grid.Row="3" DataContext="{Binding NoiseLevelVm}" />
 
-                <common:SliderControl Margin="0,2" Grid.Row="4" DataContext="{Binding StepSizeVm}"  />
+                <common:SliderControl Margin="0,2" Grid.Row="4" DataContext="{Binding StepSizeVm}" />
 
-                <common:SliderControl Margin="0,2" Grid.Row="5" DataContext="{Binding FixedFieldCplVm}"  />
+                <common:SliderControl Margin="0,2" Grid.Row="5" DataContext="{Binding FixedFieldCplVm}" />
 
                 <StackPanel Margin="0,2" Grid.Row="8" Orientation="Horizontal">
                     <TextBlock Text="AbsDelta:"/>

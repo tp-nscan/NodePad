@@ -9,6 +9,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
 
+    <UserControl.Resources>
+        <Style TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Margin" Value="0,0,0,4" />
+            </Style>
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Width" Value="100" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                <Setter Property="Padding" Value="0,3" />
+            </Style>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+            <Setter Property="Padding" Value="0,3" />
+        </Style>
+        
+    </UserControl.Resources>
 
     <Grid Style="{StaticResource ContentRoot}">
         <Grid.ColumnDefinitions>
@@ -17,91 +34,59 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <DockPanel LastChildFill="True" Grid.Column="0">
 
-            <Grid>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid.Resources>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Orientation" Value="Horizontal" />
-                        <Setter Property="Margin" Value="0,0,0,4" />
-                    </Style>
-                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Width" Value="100" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-                        <Setter Property="Padding" Value="0,3" />
-                    </Style>
-                    <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
-                        <Setter Property="Padding" Value="0,3" />
-                    </Style>
-                </Grid.Resources>
-
-
-                <StackPanel Orientation="Horizontal">
-                    <Border HorizontalAlignment="Left" BorderBrush="{DynamicResource SliderSelectionBorder}" BorderThickness="1" CornerRadius="2">
-                        <StackPanel Orientation="Horizontal">
-                            <mui:ModernButton Command="{Binding StartCommand}" Content="start" Margin="5,0"/>
-                            <mui:ModernButton Command="{Binding StopCommand}" Content="stop" Margin="5,0"/>
-                        </StackPanel>
-                    </Border>
-                    <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
-                        <TextBlock Text="Gen:" FontSize="16"/>
-                        <TextBlock Margin="5,0,0,0" Text="{Binding Generation}" FontSize="16"/>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Border HorizontalAlignment="Left" BorderBrush="{DynamicResource SliderSelectionBorder}" BorderThickness="1" CornerRadius="2">
+                    <StackPanel Orientation="Horizontal">
+                        <mui:ModernButton Command="{Binding StartCommand}" Content="start" Margin="5,0"/>
+                        <mui:ModernButton Command="{Binding StopCommand}" Content="stop" Margin="5,0"/>
                     </StackPanel>
+                </Border>
+                <StackPanel DockPanel.Dock="Top"  Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0,0,0">
+                    <TextBlock Text="Gen:" FontSize="16"/>
+                    <TextBlock Margin="5,0,0,0" Text="{Binding Generation}" FontSize="16"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Margin="0,2" Orientation="Horizontal">
+                <TextBlock Text="Time:" FontSize="16"/>
+                <TextBlock Margin="5,0" Text="{Binding ElapsedTime}" FontSize="16"/>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Margin="0,2" Orientation="Horizontal">
+                <TextBlock Text="AbsDelta:" FontSize="16"/>
+                <TextBlock Margin="5,0" Text="{Binding AbsDelta, StringFormat=N0}" FontSize="16"/>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" Margin="0,2" Orientation="Horizontal">
+                <TextBlock Text="NoiseField:" FontSize="16"/>
+                <TextBlock Margin="5,0" Text="{Binding NoiseField, StringFormat=N0}" FontSize="16"/>
+            </StackPanel>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical">
+                    
+                    <common:SliderControl Margin="0,2" DataContext="{Binding DisplayFrequencySliderVm}"  />
+
+                    <common:SliderControl Margin="0,2" DataContext="{Binding NoiseLevelVm}"  />
+
+                    <common:SliderControl Margin="0,2" DataContext="{Binding StepSizeVm}"  />
+
+                    <common:SliderControl Margin="0,2" DataContext="{Binding NoiseFieldDecayVm}"  />
+
+                    <common:SliderControl Margin="0,2" DataContext="{Binding DeltaToNoiseVm}"  />
+
+                    <common:SliderControl Margin="0,2" DataContext="{Binding NoiseFieldCplVm}"  />
+
+                    <common:SliderControl Margin="0,2" DataContext="{Binding FixedFieldCplVm}" />
+
                 </StackPanel>
 
+            </ScrollViewer>
 
-                <StackPanel Margin="0,2" Grid.Row="1" Orientation="Horizontal">
-                    <TextBlock Text="Time:" FontSize="16"/>
-                    <TextBlock Margin="5,0" Text="{Binding ElapsedTime}" FontSize="16"/>
-                </StackPanel>
-
-                <common:SliderControl Margin="0,2" Grid.Row="2" DataContext="{Binding DisplayFrequencySliderVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="3" DataContext="{Binding NoiseLevelVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="4" DataContext="{Binding StepSizeVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="5" DataContext="{Binding NoiseFieldDecayVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="6" DataContext="{Binding DeltaToNoiseVm}"  />
-
-                <common:SliderControl Margin="0,2" Grid.Row="7" DataContext="{Binding NoiseFieldCplVm}"  />
-
-                <StackPanel Margin="0,2" Grid.Row="8" Orientation="Horizontal">
-                    <TextBlock Text="AbsDelta:" FontSize="16"/>
-                    <TextBlock Margin="5,0" Text="{Binding AbsDelta, StringFormat=N0}" FontSize="16"/>
-                </StackPanel>
-
-                <StackPanel Margin="0,2" Grid.Row="9" Orientation="Horizontal">
-                    <TextBlock Text="NoiseField:" FontSize="16"/>
-                    <TextBlock Margin="5,0" Text="{Binding NoiseField, StringFormat=N0}" FontSize="16"/>
-                </StackPanel>
-
-            </Grid>
-
-
-        </Grid>
-
+        </DockPanel>
+            
         <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" Width="4" ResizeBehavior="PreviousAndNext"  
                     ResizeDirection="Columns"/>
 

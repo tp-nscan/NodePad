@@ -16,9 +16,9 @@ namespace NodePad.ViewModel.Pages.CPU
     {
         public Ring4PageVm()
         {
-            GridValsVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 2 Values");
+            GridValsVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 4 Values");
 
-            GridDeltasVm = new Grid2DVm<float>(Bounds, ColorSets.BlueUFLeg, "Ring 2 Deltas");
+            GridDeltasVm = new Grid2DVm<float>(Bounds, ColorSets.BlueUFLeg, "Ring 4 Deltas");
 
 
             DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0")
@@ -43,6 +43,10 @@ namespace NodePad.ViewModel.Pages.CPU
 
             NoiseFieldCplVm = new SliderVm(new I<float>(0.0f, 0.4f), 0.01, "0.00")
             { Title = "Noise field cpl", Value = 0.12f };
+
+
+            FixedFieldCplVm = new SliderVm(new I<float>(0.0f, 4.0f), 0.002, "0.000")
+            { Title = "Fixed field cpl", Value = 0.8f };
 
 
             Star4Grid = Star4Procs.RandStarGrid(Bounds, 1293);
@@ -83,7 +87,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #region local vars
 
-        private static readonly int GridStride = 180;
+        private static readonly int GridStride = 64;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
         private Star4Grid Star4Grid { get; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -161,7 +165,6 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #endregion // StartCommand
 
-
         #region StopCommand
 
         private RelayCommand _stopCommand;
@@ -194,6 +197,8 @@ namespace NodePad.ViewModel.Pages.CPU
         public SliderVm DeltaToNoiseVm { get; }
 
         public SliderVm NoiseFieldCplVm { get; }
+
+        public SliderVm FixedFieldCplVm { get; }
 
         private void UpdateUi()
         {
