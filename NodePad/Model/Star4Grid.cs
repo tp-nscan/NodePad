@@ -11,11 +11,11 @@ namespace NodePad.Model
     {
         public int Seed { get; }
 
-        public Star4Grid(float[,] initVals, int seed)
+        public Star4Grid(float[,] initVals, float[,] fixedVals, int seed)
         {
             Seed = seed;
             Noise = GenS.NormalSF32(GenV.Twist(seed), 0.0f, 1.0f);
-            Stars = Star4Procs.MakeStarGrid(initVals);
+            Stars = Star4Procs.MakeStarGrid(initVals, fixedVals);
             Rows = Stars.GetLength(1);
             Columns = Stars.GetLength(0);
             Generation = 0;
@@ -40,7 +40,8 @@ namespace NodePad.Model
                            float noise,
                            float nfDecay,
                            float absDeltaToNoise,
-                           float nfCpl)
+                           float nfCpl,
+                           float ffCpl)
         {
             var zippy = A2dUt.flattenRowMajor(Stars)
                              .Zip(Noise.Take(A2dUt.Count(Stars)),
@@ -51,7 +52,8 @@ namespace NodePad.Model
                 noise: tup.Item2 * noise,
                 nfDecay: nfDecay,
                 absDeltaToNoise: absDeltaToNoise,
-                nfCpl: nfCpl));
+                nfCpl: nfCpl,
+                ffCpl: ffCpl));
 
 
             Generation++;

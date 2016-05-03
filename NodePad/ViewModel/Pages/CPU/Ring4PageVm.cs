@@ -49,7 +49,7 @@ namespace NodePad.ViewModel.Pages.CPU
             { Title = "Fixed field cpl", Value = 0.8f };
 
 
-            Star4Grid = Star4Procs.RandStarGrid(Bounds, 1293);
+            Star4Grid = Star4Procs.RandStarGrid(Bounds, DesignData.GradientGrid(Bounds), 1293);
             UpdateUi();
         }
 
@@ -87,7 +87,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #region local vars
 
-        private static readonly int GridStride = 64;
+        private static readonly int GridStride = 128;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
         private Star4Grid Star4Grid { get; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -134,7 +134,9 @@ namespace NodePad.ViewModel.Pages.CPU
                             noise: NoiseLevelVm.Value,
                             nfDecay: NoiseFieldDecayVm.Value,
                             absDeltaToNoise: DeltaToNoiseVm.Value,
-                            nfCpl: NoiseFieldCplVm.Value);
+                            nfCpl: NoiseFieldCplVm.Value,
+                            ffCpl: FixedFieldCplVm.Value
+                            );
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {

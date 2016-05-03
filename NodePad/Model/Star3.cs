@@ -5,7 +5,8 @@ namespace NodePad.Model
 {
     public class Star3
     {
-        public Star3(int row, int column, float curValue, float fixedValue)
+        public Star3(int row, int column, 
+            float curValue, float fixedValue)
         {
             Row = row;
             Column = column;
@@ -44,11 +45,11 @@ namespace NodePad.Model
             AbsDelta = Math.Abs(DeltaL) + Math.Abs(DeltaR) + Math.Abs(DeltaT) + Math.Abs(DeltaB);
         }
 
-        public void Update(float step, float noise, float ffcpl)
+        public void Update(float step, float noise, float ffCpl)
         {
             if (Math.Abs(FixedValue) > NumUt.Epsilon)
             {
-                Delta += ffcpl * NNfunc.ModUFDelta(CurValue, FixedValue);
+                Delta += ffCpl * NNfunc.ModUFDelta(CurValue, FixedValue);
             }
 
             CurValue = NumUt.ModUF32(CurValue + Delta*step + noise);

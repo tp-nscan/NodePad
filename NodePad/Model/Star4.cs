@@ -5,11 +5,13 @@ namespace NodePad.Model
 {
     public class Star4
     {
-        public Star4(int row, int column, float curValue)
+        public Star4(int row, int column, 
+                     float curValue, float fixedValue)
         {
             Row = row;
             Column = column;
             CurValue = curValue;
+            FixedValue = fixedValue;
         }
 
         public Star4 Left { get; set; }
@@ -20,6 +22,7 @@ namespace NodePad.Model
         public int Row { get; private set; }
         public int Column { get; private set; }
         public float CurValue { get; private set; }
+        public float FixedValue { get; private set; }
 
         public float Delta { get; private set; }
 
@@ -50,9 +53,18 @@ namespace NodePad.Model
                             Top.NoiseField + Bottom.NoiseField;
         }
 
-        public void Update(float step, float noise, float nfDecay,
-                           float absDeltaToNoise, float nfCpl)
+        public void Update(float step, 
+                           float noise, 
+                           float nfDecay,
+                           float absDeltaToNoise, 
+                           float nfCpl,
+                           float ffCpl)
         {
+            if (Math.Abs(FixedValue) > NumUt.Epsilon)
+            {
+                Delta += ffCpl * NNfunc.ModUFDelta(CurValue, FixedValue);
+            }
+
             NoiseField = NoiseField * nfDecay +
                          AbsDelta * absDeltaToNoise +
                          NoiseFieldCpl * nfCpl;

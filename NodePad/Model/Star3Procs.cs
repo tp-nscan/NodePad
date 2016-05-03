@@ -11,7 +11,8 @@ namespace NodePad.Model
             return new Star3Grid(GenA2.RandUF32(bounds, seed), fixedVals, seed);
         }
 
-        public static Star3[,] MakeStarGrid(float[,] initVals, float[,] fixedVals)
+        public static Star3[,] MakeStarGrid(float[,] initVals, 
+            float[,] fixedVals)
         {
             var rows = initVals.GetLength(1);
             var cols = initVals.GetLength(0);

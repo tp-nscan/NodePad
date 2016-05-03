@@ -37,9 +37,10 @@ namespace NodePad.ViewModel.Pages.CPU
             set { SetProperty(ref _graphVm, value); }
         }
 
+
         #region local vars
 
-        private static readonly int GridStride = 32;
+        private static readonly int GridStride = 128;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
         private StarGrid StarGrid { get; set; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -47,6 +48,7 @@ namespace NodePad.ViewModel.Pages.CPU
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         #endregion
+
 
         #region public vars
 
@@ -60,6 +62,7 @@ namespace NodePad.ViewModel.Pages.CPU
         public SliderVm DisplayFrequencySliderVm { get; }
 
         #endregion
+
 
         #region StartCommand
 

@@ -156,7 +156,6 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #endregion // StartCommand
 
-
         #region StopCommand
 
         private RelayCommand _stopCommand;

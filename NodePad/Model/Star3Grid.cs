@@ -36,7 +36,9 @@ namespace NodePad.Model
             A2dUt.flattenRowMajor(Stars).ForEach(s => s.CalcDelta());
         }
 
-        public void Update(float step, float noise, float ffCpl)
+        public void Update(float step, 
+                           float noise, 
+                           float ffCpl)
         {
             var zippy = A2dUt.flattenRowMajor(Stars)
                              .Zip(Noise.Take(A2dUt.Count(Stars)),

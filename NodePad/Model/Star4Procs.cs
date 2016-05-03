@@ -6,12 +6,13 @@ namespace NodePad.Model
 {
     public static class Star4Procs
     {
-        public static Star4Grid RandStarGrid(Sz2<int> bounds, int seed)
+        public static Star4Grid RandStarGrid(Sz2<int> bounds, float[,] fixedVals, int seed)
         {
-            return new Star4Grid(GenA2.RandUF32(bounds, seed), seed);
+            return new Star4Grid(GenA2.RandUF32(bounds, seed), fixedVals, seed);
         }
 
-        public static Star4[,] MakeStarGrid(float[,] initVals)
+        public static Star4[,] MakeStarGrid(float[,] initVals,
+            float[,] fixedVals)
         {
             var rows = initVals.GetLength(1);
             var cols = initVals.GetLength(0);
@@ -21,7 +22,8 @@ namespace NodePad.Model
             {
                 for (var j = 0; j < cols; j++)
                 {
-                    stars[i, j] = new Star4(i, j, initVals[i, j]);
+                    stars[i, j] = new Star4(i, j, initVals[i, j], 
+                        fixedVals[i, j]);
                 }
             }
 
