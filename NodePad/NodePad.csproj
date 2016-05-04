@@ -97,8 +97,11 @@
     <Compile Include="Model\Star3.cs" />
     <Compile Include="Model\Star3Grid.cs" />
     <Compile Include="Model\Star3Procs.cs" />
+    <Compile Include="Model\Star5.cs" />
     <Compile Include="Model\Star4.cs" />
+    <Compile Include="Model\Star5Grid.cs" />
     <Compile Include="Model\Star4Grid.cs" />
+    <Compile Include="Model\Star5Procs.cs" />
     <Compile Include="Model\Star4Procs.cs" />
     <Compile Include="Model\StarGrid.cs" />
     <Compile Include="Model\StarProcs.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="ViewModel\Design\Pages\RingPageVmD.cs" />
     <Compile Include="ViewModel\Pages\CPU\PairsPageVm.cs" />
     <Compile Include="ViewModel\Pages\CPU\Ring2PageVm.cs" />
+    <Compile Include="ViewModel\Pages\CPU\Ring5PageVm.cs" />
     <Compile Include="ViewModel\Pages\CPU\Ring4PageVm.cs" />
     <Compile Include="ViewModel\Pages\CPU\RingPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\ControlPageVm.cs" />
@@ -178,6 +182,9 @@
     </Compile>
     <Compile Include="View\Pages\CPU\Ring2Page.xaml.cs">
       <DependentUpon>Ring2Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\CPU\Ring5Page.xaml.cs">
+      <DependentUpon>Ring5Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\CPU\Ring4Page.xaml.cs">
       <DependentUpon>Ring4Page.xaml</DependentUpon>
@@ -298,6 +305,10 @@
     <Page Include="View\Pages\CPU\Ring2Page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\CPU\Ring5Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Pages\CPU\Ring4Page.xaml">
       <SubType>Designer</SubType>
