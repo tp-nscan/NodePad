@@ -50,7 +50,11 @@ namespace NodePad.ViewModel.Pages.CPU
             { Title = "Fixed field cpl", Value = 0.8f };
 
 
-            Star5Grid = Star5Procs.RandStarGrid(Bounds, DesignData.GradientGrid(Bounds), 1293);
+            AbsDeltaTargetVm = new SliderVm(new I<float>(0.0f, 0.4f), 0.002, "0.000")
+                { Title = "AbsDelta Target", Value = 0.2f };
+
+
+        Star5Grid = Star5Procs.RandStarGrid(Bounds, DesignData.GradientGrid(Bounds), 1293);
             UpdateUi();
         }
 
@@ -189,6 +193,8 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #endregion // StopCommand
 
+        public SliderVm AbsDeltaTargetVm { get; }
+
         public SliderVm DisplayFrequencySliderVm { get; }
 
         public SliderVm NoiseLevelVm { get; }
@@ -209,7 +215,7 @@ namespace NodePad.ViewModel.Pages.CPU
             GridDeltasVm.UpdateData(Star5Grid.CurDeltasAsP2Vs());
             AbsDelta = A2dUt.flattenRowMajor(Star5Grid.Stars).Average(st => st.AbsDelta);
             NoiseField = A2dUt.flattenRowMajor(Star5Grid.Stars).Average(st => st.NoiseField);
-            NoiseLevelVm.Value = (NoiseField > Math.Min(0.2, AbsDelta*0.5)) ? NoiseLevelVm.Value - 0.0025f : NoiseLevelVm.Value + 0.0025f;
+            NoiseLevelVm.Value = (NoiseField > AbsDeltaTargetVm.Value) ? NoiseLevelVm.Value - 0.0025f : NoiseLevelVm.Value + 0.0025f;
             OnPropertyChanged("Generation");
             OnPropertyChanged("ElapsedTime");
         }
