@@ -5,9 +5,7 @@ module Histos =
 
     type Bin1d = IV<float32, int>
 
-
     type Bin2d = RV<float32, int>
-
 
     let IncrementBin1d {Bin1d.Min=min; Max=max; V=count} = 
             {Min=min; Max=max; V=count+1}
@@ -25,8 +23,8 @@ module Histos =
 
 
     let Bin2dSetMaker (bounds:R<float32>) (binCount:Sz2<int>) =
-        let binWidthX = (BT.SpanX bounds)/ (float32 binCount.X)
-        let binWidthY = (BT.SpanY bounds)/ (float32 binCount.Y)
+        let binWidthX = (BTInline.SpanX bounds)/ (float32 binCount.X)
+        let binWidthY = (BTInline.SpanY bounds)/ (float32 binCount.Y)
         let bbX (i:int) = bounds.MinX + (float32 i) * binWidthX
         let bbY (i:int) = bounds.MinY + (float32 i) * binWidthY       
         Array2D.init binCount.X binCount.Y 
@@ -64,8 +62,8 @@ module Histos =
 
     let Histogram2d (bounds:R<float32>) (binCount:Sz2<int>) (vals:seq<P2<float32>>) =
             let bins = Bin2dSetMaker bounds binCount
-            let scaleX = (float32 binCount.X)/(BT.SpanX bounds)
-            let scaleY = (float32 binCount.Y)/(BT.SpanY bounds)
+            let scaleX = (float32 binCount.X)/(BTInline.SpanX bounds)
+            let scaleY = (float32 binCount.Y)/(BTInline.SpanY bounds)
             let keyMakerX = Binkey bounds.MinX scaleX
             let keyMakerY = Binkey bounds.MinY scaleY
             let loader = BinLoader2d keyMakerX binCount.X keyMakerY binCount.Y

@@ -88,12 +88,12 @@ namespace NodePad.ViewModel.Common
         {
             if (EnforceBounds)
             {
-                Values = BT.FilterRP(Bounds, values).ToArray();
+                Values = BTInline.FilterRP(Bounds, values).ToArray();
             }
             else
             {
                 Values = values.ToArray();
-                Bounds = BT.BoundRectP2F32(Values);
+                Bounds = BTInline.BoundRectP2F32(Values);
             }
 
             UpdateGraphVm();

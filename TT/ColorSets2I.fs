@@ -32,7 +32,7 @@ module ColorSets2I =
 
 
     let inline GetLeg2IColorF32 (lm:ColorLeg2I<float32>) (value:P2<float32>) =
-        if (BT.InRP lm.rangeV value) then  
+        if (BTInline.InRP lm.rangeV value) then  
             ( lm.mapper value ) |> A2dUt.MemberByP2 lm.spanC
         else lm.exteriorC
 

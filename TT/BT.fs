@@ -16,91 +16,7 @@ type IV<'c,'v>  = { Min:'c; Max:'c; V:'v  }
 type RV<'c,'v>  = { MinX:'c; MaxX:'c; MinY:'c; MaxY:'c; V:'v } 
 type LS2V<'c,'v>  = { X1:'c; Y1:'c; X2:'c; Y2:'c; V:'v } 
 
-module NumUt =
-
-    let Epsilon = 0.00001f
-
-    let Fraction32Of (num:int) (frac:float32) =
-        System.Convert.ToInt32(((float32 num) * frac))
-
-
-    let AbsF32 (v:float32) =
-        if v < 0.0f then -v
-        else v
-
-
-    let MapUF (min:float) (max:float) (value:float) =
-        let span = max-min
-        min + value*span
-
-
-    let inline AddInRange min max a b =
-        let res = a + b
-        if res < min then min
-        else if res > max then max
-        else res
-
-
-    let inline FlipWhen a b flipProb draw current =
-        match (flipProb < draw) with
-        | true -> if a=current then b else a
-        | false -> current
-
-
-    let ToUF value =
-        if value < 0.0f then 0.0f
-        else if value > 1.0f then 1.0f
-        else value
-
-
-    let ToSF value =
-        if value < -1.0f then -1.0f
-        else if value > 1.0f then 1.0f
-        else value
-
-
-    let rec ModUF32 value =
-        if ((value > 1.0f) || (value < 0.0f) ) then 
-            value - (float32 (Math.Floor (float value)))
-        else
-            value
-
-
-    let rec ModUF value =
-        if ((value > 1.0) || (value < 0.0) ) then 
-            value - Math.Floor(value)
-        else
-            value
-
-
-    let FloatToUF value =
-        if value < 0.0 then 0.0f
-        else if value > 1.0 then 1.0f
-        else (float32 value)
-
-
-    let FloatToSF value =
-        if value < -1.0 then -1.0f
-        else if value > 1.0 then 1.0f
-        else (float32 value)
-
-
-    let inline AorB a b thresh value =
-        if value < thresh then a
-        else b
-
-
-    let Sz2IntToFloat (s2:Sz2<int>) =
-        {Sz2.X = (float s2.X); Y = (float s2.Y)}
-
-
-    let Sz2IntToFloat32 (s2:Sz2<int>) =
-        {Sz2.X = (float32 s2.X); Y = (float32 s2.Y)}
-
-
-
-
-module BT =
+module BTconst =
 
     let AntiIofS = 
         { 
@@ -129,6 +45,9 @@ module BT =
             MinY = System.Int32.MaxValue;  
             MaxY = System.Int32.MinValue; 
         }
+
+
+module BTInline = 
 
     // makes an interval from arbitrary values with the expected ordering
     let inline RegularI< ^a when ^a: comparison> (x1:^a) (x2:^a) =
@@ -165,9 +84,32 @@ module BT =
        ((^a : (member Max : ^b) range) + (^a : (member Min : ^b) range) ) / 2
 
 
-    let inline InL (range:^a when ^a:(member Min : ^b) and ^a:(member Max : ^b)) 
-                   (p1:^b) =
-       ((^a : (member Max : ^b) range) >= p1) && ((^a : (member Min : ^b) range) <= p1)
+    let inline InI (range:^a when ^a:(member Min : ^b) and ^a:(member Max : ^b)) 
+                   (tv:^b) =
+       ((^a : (member Max : ^b) range) >= tv) && ((^a : (member Min : ^b) range) <= tv)
+
+
+    let inline ClipToI (range:^a when ^a:(member Min : ^b) and ^a:(member Max : ^b)) 
+                       (tv:^b) =
+        if tv < (^a : (member Min : ^b) range)  then (^a : (member Min : ^b) range) 
+        else if tv > (^a : (member Max : ^b) range)  then (^a : (member Max : ^b) range) 
+        else tv
+
+
+    let inline AddInIV (range:^a when ^a:(member Min : ^b) and ^a:(member Max : ^b) and ^a:(member V : ^b))  
+                       (delta:^b) =
+        let res = (^a : (member V : ^b) range) + delta
+        if res < (^a : (member Min : ^b) range)  then (^a : (member Min : ^b) range) 
+        else if res > (^a : (member Max : ^b) range)  then (^a : (member Max : ^b) range) 
+        else res
+
+//
+//    let inline AddInRangeI bounds a b =
+//        let res = a + b
+//        if res < bounds.Min then bounds.Min
+//        else if res > bounds.Max then bounds.Max
+//        else res
+
 
 
     let inline Area (range:^a when 
@@ -286,7 +228,7 @@ module BT =
 
 
     let inline BoundRectP2F32 p2s =
-            p2s |> Array.fold(fun acc p -> StretchRPF32 acc p ) AntiRofF32 
+            p2s |> Array.fold(fun acc p -> StretchRPF32 acc p ) BTconst.AntiRofF32 
 
 
     let inline BoundingRR (box:R< ^b>) 
@@ -311,6 +253,17 @@ module BT =
             sI |> Seq.fold (fun acc elem -> StretchII acc elem ) range
 
 
+
+
+
+module BT =
+
+    let Sz2IntToFloat (s2:Sz2<int>) =
+        {Sz2.X = (float s2.X); Y = (float s2.Y)}
+
+    let Sz2IntToFloat32 (s2:Sz2<int>) =
+        {Sz2.X = (float32 s2.X); Y = (float32 s2.Y)}
+
     let Count (sz:Sz2<int>) =
         sz.X * sz.Y
 
@@ -324,14 +277,14 @@ module BT =
         {P3V.X = p3V.X; Y=p3V.Y; Z=p3V.Z; V = f p3V.V}
 
     let MutateIV iV f =
-        {IV.Min = iV.Min; Max = iV.Max; V = f iV.V}
+        {IV.Min = iV.Min; Max = iV.Max; V = BTInline.ClipToI iV f}
 
     let MutateRV rV f =
         {RV.MinX=rV.MinX; MinY = rV.MinY; MaxX=rV.MaxX; MaxY=rV.MaxY; V = f rV.V}
 
     let MutateLS2V ls2V f =
         {LS2V.X1=ls2V.X1; LS2V.X2=ls2V.X2; LS2V.Y1=ls2V.Y1; LS2V.Y2=ls2V.Y2; V = f ls2V.V}
-
+        
 
 
 module AUt =

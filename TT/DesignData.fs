@@ -222,7 +222,7 @@ module DesignData =
     let Convexo (bounds:Sz2<int>) (thetaOffsets: float -> P2<float>) thetaFunc =
         seq { 0 .. 4 * bounds.X - 1 }
         |> Seq.map(fun tic -> 0.5 * (float tic) * Math.PI / (float bounds.X) )
-        |> Seq.map(fun v -> let res = DiscretP2 (NumUt.Sz2IntToFloat bounds) (thetaOffsets v)
+        |> Seq.map(fun v -> let res = DiscretP2 (BT.Sz2IntToFloat bounds) (thetaOffsets v)
                             { P2V.X=res.X; Y=res.Y; V= thetaFunc v })
         |> Seq.distinctBy(fun v -> (v.X, v.Y))
 

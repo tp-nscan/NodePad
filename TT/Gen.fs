@@ -139,7 +139,7 @@ module GenBT =
 
     let inline IofSeqChunk< ^a when ^a: comparison> (values:seq<'a>) =
         values |> Seq.chunkBySize 2    
-               |> Seq.map(fun v -> ( BT.RegularI v.[0] v.[1] ))
+               |> Seq.map(fun v -> (BTInline.RegularI v.[0] v.[1] ))
 
 
     //Sequences that use this are typicaly ordered, so that assumption is
@@ -151,7 +151,7 @@ module GenBT =
 
     let inline RofSeq< ^a when ^a: comparison> (values:seq< ^a>) =
         values |> Seq.chunkBySize 4   
-               |> Seq.map(fun v -> (BT.RegularR v.[0] v.[1] v.[2] v.[3])
+               |> Seq.map(fun v -> (BTInline.RegularR v.[0] v.[1] v.[2] v.[3])
                          )
 
     let LS2ofSeq (values:seq<float32>) =

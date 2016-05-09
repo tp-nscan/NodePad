@@ -37,15 +37,15 @@ module Partition =
 
 
     let TicMarks (interval:I<float32>) (segs:int) =
-        let midge = (BT.Span interval) / (float32 segs)
+        let midge = (BTInline.Span interval) / (float32 segs)
         let tock tic = interval.Min + midge * (float32 tic)
         seq {0 .. segs} |> Seq.map(fun s -> tock s)
 
 
     let TicMarks2d (region:R<float32>) (segs:Sz2<int>) =
-        let midgeX = (BT.SpanX region) / (float32 segs.X)
+        let midgeX = (BTInline.SpanX region) / (float32 segs.X)
         let tockX tic = region.MinX + midgeX * (float32 tic)
-        let midgeY = (BT.SpanY region) / (float32 segs.Y)
+        let midgeY = (BTInline.SpanY region) / (float32 segs.Y)
         let tockY tic = region.MinY + midgeY * (float32 tic)
         seq { for row in 0 .. segs.Y do
                 for col in 0 .. segs.X do

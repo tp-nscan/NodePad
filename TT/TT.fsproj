@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Rop.fs" />
+    <Compile Include="NumUt.fs" />
     <Compile Include="BT.fs" />
     <Compile Include="Gen.fs" />
     <Compile Include="Partition.fs" />
@@ -66,6 +67,7 @@
     <Compile Include="ImageData.fs" />
     <Compile Include="Histogram.fs" />
     <Compile Include="NNfunc.fs" />
+    <Compile Include="Param.fs" />
     <Compile Include="CliqueE.fs" />
     <Compile Include="RingE.fs" />
     <Compile Include="ConfigVm.fs" />

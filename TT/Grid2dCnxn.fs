@@ -114,7 +114,7 @@ module Grid2dCnxn =
 
    
     let GeneralLS2Vs (strides:Sz2<int>) (offsets:seq<P2<int>>) 
-                 (localWeights:int->int->int->int->float32) =
+                     (localWeights:int->int->int->int->float32) =
         AllOffsets strides offsets
         |> Seq.map(fun inf-> 
                     { 

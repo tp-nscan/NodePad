@@ -19,10 +19,10 @@ module Id =
     let frs = filledRects |> Seq.toArray
     let pls = plotLines |> Seq.toArray
 
-    let mutable br = pps |> Array.fold (BT.StretchRP) BT.AntiRofF32
-    br <- ors |> Array.fold (BT.StretchRR) br
-    br <- frs |> Array.fold (BT.StretchRR) br
-    br <- pls |> Array.fold (BT.StretchRL) br
+    let mutable br = pps |> Array.fold (BTInline.StretchRP) BTconst.AntiRofF32
+    br <- ors |> Array.fold (BTInline.StretchRR) br
+    br <- frs |> Array.fold (BTInline.StretchRR) br
+    br <- pls |> Array.fold (BTInline.StretchRL) br
 
     { plotPoints=pps; filledRects=frs; openRects=ors; plotLines=pls; 
         imageSize=imageSize; boundingRect={ R.MinX=(br.MinX);
