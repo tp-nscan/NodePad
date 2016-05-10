@@ -1,8 +1,6 @@
 ﻿namespace TT
 open System
 
-
-
 module NumUt =
 
     let Epsilon = 0.00001f
