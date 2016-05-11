@@ -9,7 +9,15 @@ type Param =
    | PInt of Pb<int>
    | PF32 of Pb<float32>
 
+
+
 module Params = 
+
+    let ForCSharp param =
+        match param with
+        | PInt _  -> (param, ParamType.Int)
+        | PF32 _  -> (param, ParamType.F32)
+
 
     let DisplayFreqParam = PInt( {Pb.bounds={I.Min=0; Max=50;}; value=10; descr="Display Frequency"; pt=ParamType.Int})
     let NoiseParam = PF32( {Pb.bounds={I.Min=0.0f; Max=0.5f;}; value=0.25f; descr="Noise"; pt=ParamType.F32})
@@ -21,32 +29,32 @@ module Params =
     let AbsDeltaTargetVm = PF32( {Pb.bounds={I.Min=0.0f; Max=0.4f;}; value=2.2f; descr="AbsDelta target"; pt=ParamType.F32})
 
     let RingParams =
-        [
+        [|
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
-        ]
+        |]
 
     let Ring2Params =
-        [
+        [|
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
             ("NoiseDecay", NoiseFieldDecayParam)
             ("DeltaToNoise", DeltaToNoiseParam)
             ("NoiseField", NoiseFieldCplParam)
-        ]
+        |]
 
     let Ring3Params =
-        [
+        [|
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
             ("FixedFieldCpl", FixedFieldCplParam)
-        ]
+        |]
 
     let Ring4Params =
-        [
+        [|
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
@@ -54,10 +62,10 @@ module Params =
             ("DeltaToNoise", DeltaToNoiseParam)
             ("NoiseField", NoiseFieldCplParam)
             ("FixedFieldCpl", FixedFieldCplParam)
-        ]
+        |]
 
     let Ring5Params =
-        [
+        [|
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
@@ -66,5 +74,5 @@ module Params =
             ("NoiseField", NoiseFieldCplParam)
             ("FixedFieldCpl", FixedFieldCplParam)
             ("AbsDeltaTarget", AbsDeltaTargetVm)
-        ]
+        |]
 
