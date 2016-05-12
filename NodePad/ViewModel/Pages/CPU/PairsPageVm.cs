@@ -21,19 +21,19 @@ namespace NodePad.ViewModel.Pages.CPU
             GridDeltasVm = new Grid2DVm<float>(Bounds, ColorSets.BlueUFLeg, "Ring 2 Deltas");
 
 
-            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0")
+            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0", "DisplayFrequency")
             { Title = "Display Frequency", Value = 2 };
 
 
-            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000")
+            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000", "NoiseLevel")
             { Title = "Noise", Value = 0.03f };
 
 
-            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.02, "0.00")
+            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.02, "0.00", "StepSize")
             { Title = "Step Size", Value = 0.1f };
 
 
-            FixedFieldCplVm = new SliderVm(new I<float>(0.0f, 4.0f), 0.002, "0.000")
+            FixedFieldCplVm = new SliderVm(new I<float>(0.0f, 4.0f), 0.002, "0.000", "FixedFieldCpl")
             { Title = "Fixed field cpl", Value = 0.8f };
 
 

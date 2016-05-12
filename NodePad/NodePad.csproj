@@ -90,6 +90,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\CommandBase.cs" />
+    <Compile Include="Common\NotifyingCollection.cs" />
     <Compile Include="Model\Star.cs" />
     <Compile Include="Model\Star2.cs" />
     <Compile Include="Model\Star2Grid.cs" />

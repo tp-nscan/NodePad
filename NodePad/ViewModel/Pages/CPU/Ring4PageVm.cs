@@ -21,31 +21,31 @@ namespace NodePad.ViewModel.Pages.CPU
             GridDeltasVm = new Grid2DVm<float>(Bounds, ColorSets.BlueUFLeg, "Ring 4 Deltas");
 
 
-            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0")
+            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0", "DisplayFrequency")
             { Title = "Display Frequency", Value = 2 };
 
 
-            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.5f), 0.01, "0.00")
+            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.5f), 0.01, "0.00", "NoiseLevel")
             { Title = "Noise", Value = 0.25f };
 
 
-            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.01, "0.00")
+            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.01, "0.00", "StepSize")
             { Title = "Step Size", Value = 0.1f };
 
 
-            NoiseFieldDecayVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00")
+            NoiseFieldDecayVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00", "NoiseFieldDecay")
             { Title = "Noise field decay", Value = 0.3f };
 
 
-            DeltaToNoiseVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00")
+            DeltaToNoiseVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00", "DeltaToNoise")
             { Title = "Delta to noise", Value = 0.2f };
 
 
-            NoiseFieldCplVm = new SliderVm(new I<float>(0.0f, 0.4f), 0.01, "0.00")
+            NoiseFieldCplVm = new SliderVm(new I<float>(0.0f, 0.4f), 0.01, "0.00", "NoiseFieldCpl")
             { Title = "Noise field cpl", Value = 0.12f };
 
 
-            FixedFieldCplVm = new SliderVm(new I<float>(0.0f, 4.0f), 0.002, "0.000")
+            FixedFieldCplVm = new SliderVm(new I<float>(0.0f, 4.0f), 0.002, "0.000", "FixedFieldCpl")
             { Title = "Fixed field cpl", Value = 0.8f };
 
 

@@ -16,13 +16,14 @@ namespace NodePad.ViewModel.Pages.CPU
         public RingPageVm()
         {
             Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 1");
-            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.02, "0.00")
+
+            StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.02, "0.00", "StepSize")
                                             { Title = "Step Size", Value = 0.1f };
 
-            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0")
+            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0", "DisplayFrequency")
                                             { Title = "Display Frequency", Value = 2 };
 
-            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000")
+            NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000", "NoiseLevel")
                                             { Title = "Noise", Value = 0.03f };
 
             StarGrid = StarProcs.RandStarGrid(Bounds, 1293);

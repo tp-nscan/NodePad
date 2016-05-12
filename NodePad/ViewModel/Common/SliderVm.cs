@@ -5,14 +5,15 @@ using TT;
 
 namespace NodePad.ViewModel.Common
 {
-    public class SliderVm : BindableBase
+    public class SliderVm : BindableBase, IReportsChanges<SliderVm>
     {
         public SliderVm(I<float> interval,
                         double tickFrequency,
-                        string numberFormat)
+                        string numberFormat, string key)
         {
             TickFrequency = tickFrequency;
             NumberFormat = numberFormat;
+            Key = key;
             Interval = interval;
             Value = Interval.Mid();
         }
@@ -51,8 +52,11 @@ namespace NodePad.ViewModel.Common
 
         public bool IsDirty { get; set; }
 
-        private readonly Subject<SliderVm> _sliderVmChanged
-            = new Subject<SliderVm>();
+        private readonly Subject<SliderVm> _sliderVmChanged = new Subject<SliderVm>();
         public IObservable<SliderVm> OnSliderVmChanged => _sliderVmChanged;
+
+        IObservable<SliderVm> IReportsChanges<SliderVm>.ReportAChange => OnSliderVmChanged;
+
+        public string Key { get; }
     }
 }
