@@ -109,6 +109,7 @@
     <Compile Include="ViewModel\Common\FloatVm.cs" />
     <Compile Include="ViewModel\Common\Grid2D2IVm.cs" />
     <Compile Include="ViewModel\Common\IntVm.cs" />
+    <Compile Include="ViewModel\Common\ParamVm\ParamBaseVm.cs" />
     <Compile Include="ViewModel\Design\Common\Grid2D2IVmD.cs" />
     <Compile Include="ViewModel\Design\Common\SliderVmD.cs" />
     <Compile Include="ViewModel\Common\FloatCmdVm.cs" />

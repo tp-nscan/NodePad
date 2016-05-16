@@ -17,7 +17,7 @@ namespace NodePad.Common
         private readonly Subject<T> _memberChanged = new Subject<T>();
         public IObservable<T> OnMemberChanged => _memberChanged;
 
-        private Dictionary<string, IDisposable> _subscriptions = new Dictionary<string, IDisposable>() ;
+        private readonly Dictionary<string, IDisposable> _subscriptions = new Dictionary<string, IDisposable>() ;
 
         protected override void InsertItem(int index, T item)
         {

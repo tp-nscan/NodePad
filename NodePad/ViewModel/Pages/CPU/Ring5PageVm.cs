@@ -91,7 +91,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #region local vars
 
-        private static readonly int GridStride = 128;
+        private static readonly int GridStride = 256;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
         private Star5Grid Star5Grid { get; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -132,7 +132,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
                 for (var i = 0; _isRunning; i++)
                 {
-                    Star5Grid.GetDeltas();
+                   // Star5Grid.GetDeltas();
                     Star5Grid.Update(
                             step: StepSizeVm.Value,
                             noise: NoiseLevelVm.Value,

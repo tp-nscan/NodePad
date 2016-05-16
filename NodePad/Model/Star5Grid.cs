@@ -33,7 +33,11 @@ namespace NodePad.Model
 
         public void GetDeltas()
         {
-            A2dUt.flattenRowMajor(Stars).ForEach(s => s.CalcDelta());
+            //500 @ 10.74s
+           // A2dUt.flattenRowMajor(Stars).ForEach(s => s.CalcDelta());
+            // 39.167
+            //var pcs = A2dUt.flattenRowMajor(Stars).ToArray();
+            //Parallel.ForEach(pcs, s => s.CalcDelta());
         }
 
         public void Update(float step,
@@ -47,13 +51,35 @@ namespace NodePad.Model
                              .Zip(Noise.Take(A2dUt.Count(Stars)),
                                  (a, b) => new Tuple<Star5, float>(a, b));
 
-            Parallel.ForEach(zippy, tup => tup.Item1.Update(
-                step: step,
-                noise: tup.Item2 * noise,
-                nfDecay: nfDecay,
-                absDeltaToNoise: absDeltaToNoise,
-                nfCpl: nfCpl,
-                ffCpl: ffCpl));
+            zippy.ToArray().AsParallel().ForEach(
+                tup => tup.Item1.Update(
+                    step: step,
+                    noise: tup.Item2 * noise,
+                    nfDecay: nfDecay,
+                    absDeltaToNoise: absDeltaToNoise,
+                    nfCpl: nfCpl,
+                    ffCpl: ffCpl)
+                );
+
+            //zippy.ForEach(
+
+            //    tup => tup.Item1.Update(
+            //        step: step,
+            //        noise: tup.Item2 * noise,
+            //        nfDecay: nfDecay,
+            //        absDeltaToNoise: absDeltaToNoise,
+            //        nfCpl: nfCpl,
+            //        ffCpl: ffCpl)
+
+            //    );
+
+            //Parallel.ForEach(zippy, tup => tup.Item1.Update(
+            //    step: step,
+            //    noise: tup.Item2 * noise,
+            //    nfDecay: nfDecay,
+            //    absDeltaToNoise: absDeltaToNoise,
+            //    nfCpl: nfCpl,
+            //    ffCpl: ffCpl));
 
 
             Generation++;

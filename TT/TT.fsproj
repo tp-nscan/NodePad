@@ -74,6 +74,7 @@
     <Compile Include="ConfigVm.fs" />
     <Compile Include="IntegerZ5.fs" />
     <Compile Include="Sim.fs" />
+    <Compile Include="VmUtil.fs" />
     <Compile Include="DesignData.fs" />
     <Content Include="packages.config" />
     <None Include="Script.fsx" />
