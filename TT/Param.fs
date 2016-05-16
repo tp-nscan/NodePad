@@ -34,8 +34,6 @@ module Params =
     let NoiseParam           = PF32( {Pb.bounds={I.Min=0.0f; Max=0.5f;}; value=0.25f; key="Noise"; descr="Noise";})
     let StepSizeParam        = PF32( {Pb.bounds={I.Min=0.0f; Max=0.3f;}; value=0.01f; key="StepSize"; descr="Step Size";})
     
-    let NearCplParam         = PF32( {Pb.bounds={I.Min=0.0f; Max=0.9f;}; value=0.3f;  key="NearCpl"; descr="cpl";})
-    let FarCplParam          = PF32( {Pb.bounds={I.Min=0.0f; Max=0.9f;}; value=0.3f;  key="FarCpl"; descr="cpl";})
     let DecayParam           = PF32( {Pb.bounds={I.Min=0.0f; Max=0.9f;}; value=0.3f;  key="Decay"; descr="decay";})
     let TargetParam          = PF32( {Pb.bounds={I.Min=0.0f; Max=0.9f;}; value=0.3f;  key="Target"; descr="target";})
     let TargetCplParam       = PF32( {Pb.bounds={I.Min=0.0f; Max=0.9f;}; value=0.3f;  key="TargetCpl"; descr="target cpl";})
@@ -47,33 +45,55 @@ module Params =
     let AbsDeltaTargetParam  = PF32( {Pb.bounds={I.Min=0.0f; Max=0.4f;}; value=2.2f;  key="AbsDeltaTarget"; descr="AbsDelta target";})
 
 
+    let CplParams key descr =
+        PF32( {Pb.bounds={I.Min=0.0f; Max=0.9f;}; value=0.3f; key=key; descr=descr;})
+
+    let NearCplParam = CplParams "NearCpl" "near cpl"
+    let FarCplParam = CplParams "FarCpl" "far cpl"
+    let InterLayerParam layerFrom layerTo = CplParams (layerFrom + "." + layerTo) ("flow from " + layerFrom + " to " + layerTo)
+
+    let StandardParams =
+        [
+            DisplayFreqParam
+            StepSizeParam
+        ]
+
+
+    let StandardParamGroup =
+        {ParamGroup.key="standard"; descr=""; groups=[]; 
+        nodes=StandardParams;}
+
+
     let RingParams =
-        [|
+        [
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
-        |]
+        ]
+
 
     let Ring2Params =
-        [|
+        [
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
             ("NoiseDecay", NoiseFieldDecayParam)
             ("DeltaToNoise", DeltaToNoiseParam)
             ("NoiseField", NoiseFieldCplParam)
-        |]
+        ]
+
 
     let Ring3Params =
-        [|
+        [
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
             ("FixedFieldCpl", FixedFieldCplParam)
-        |]
+        ]
+
 
     let Ring4Params =
-        [|
+        [
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
@@ -81,10 +101,11 @@ module Params =
             ("DeltaToNoise", DeltaToNoiseParam)
             ("NoiseField", NoiseFieldCplParam)
             ("FixedFieldCpl", FixedFieldCplParam)
-        |]
+        ]
+
 
     let Ring5Params =
-        [|
+        [
             ("DisplayFreq", DisplayFreqParam)
             ("Noise", NoiseParam)
             ("StepSize", StepSizeParam)
@@ -93,5 +114,15 @@ module Params =
             ("NoiseField", NoiseFieldCplParam)
             ("FixedFieldCpl", FixedFieldCplParam)
             ("AbsDeltaTarget", AbsDeltaTargetParam)
-        |]
+        ]
 
+
+    let LayerParamGroup key descr = 
+        {ParamGroup.key=key; descr=descr; groups=[]; 
+        nodes=[ NearCplParam; FarCplParam; DecayParam;];}
+
+
+    let Godzilla = 
+        {ParamGroup.key="Godzilla"; descr="Godzilla"; 
+        groups=[(LayerParamGroup "ring" "ring"); (LayerParamGroup "noise" "noise");]; 
+        nodes=[ NearCplParam; FarCplParam; DecayParam;];}

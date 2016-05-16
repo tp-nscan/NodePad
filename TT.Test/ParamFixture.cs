@@ -11,7 +11,7 @@ namespace TT.Test
         {
             var parames = Params.Ring5Params;
 
-            var d = MathUtils.ArrayToDict(parames);
+            var d = MathUtils.ListToDict(parames);
 
         }
     }
