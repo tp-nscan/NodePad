@@ -14,5 +14,14 @@ namespace TT.Test
             var d = MathUtils.ListToDict(parames);
 
         }
+
+        [TestMethod]
+        public void TestReadParamGroup()
+        {
+            var parames = Params.Godzilla;
+
+            var d = Params.GetParamGroupValue(parames, "a.b.cc.gg");
+
+        }
     }
 }

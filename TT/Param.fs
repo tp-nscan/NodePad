@@ -12,7 +12,8 @@ type Param =
 
 type ParamGroup = {key:string; descr:string; groups:ParamGroup list; nodes:Param list}
 
-module Params = 
+
+module Params =
 
     let ForCSharp param =
         match param with
@@ -24,6 +25,25 @@ module Params =
         match param with
         | PInt pInt  -> PInt( {Pb.bounds=pInt.bounds; value=(int newVal); key=pInt.key; descr=pInt.descr;})
         | PF32 pF32  -> PF32( {Pb.bounds=pF32.bounds; value=newVal; key=pF32.key; descr=pF32.descr;})
+
+
+    let GetParamGroupWithKey<'a> (pram: ParamGroup list) (key:string) =
+        try
+           Some (pram |> List.find(fun m -> m.key = key))
+        with
+            | :? KeyNotFoundException -> None
+
+
+
+    let GetParamGroupValue (paramG:ParamGroup) (key:string) =
+        let kL = key.Split ([|'.'|], System.StringSplitOptions.None) |> Array.toList
+        let rec Extracto (ks:string list) (pg:ParamGroup) = 
+            match ks with
+            | [a] -> Some a
+            | head::tail -> Extracto tail pg
+            | [] -> None
+
+        Extracto kL paramG    
 
 
     let UpdateParams (pd: IDictionary<string, Param>) (key:string) (value:float32) =
