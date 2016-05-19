@@ -27,23 +27,37 @@ module Params =
         | PF32 pF32  -> PF32( {Pb.bounds=pF32.bounds; value=newVal; key=pF32.key; descr=pF32.descr;})
 
 
+    let GetKey (param:Param) =
+        match param with
+        | PInt pInt  -> pInt.key
+        | PF32 pF32  -> pF32.key
+
+
     let GetParamGroupWithKey<'a> (pram: ParamGroup list) (key:string) =
         try
-           Some (pram |> List.find(fun m -> m.key = key))
+           Rop.succeed (pram |> List.find(fun m -> m.key = key))
         with
-            | :? KeyNotFoundException -> None
+            | :? KeyNotFoundException -> Rop.fail (key + " not found")
 
+
+    let GetParamWithKey<'a> (pram: Param list) (key:string) =
+        try
+           Rop.succeed (pram |> List.find(fun m -> (GetKey m) = key))
+        with
+            | :? KeyNotFoundException -> Rop.fail (key + " not found")
 
 
     let GetParamGroupValue (paramG:ParamGroup) (key:string) =
         let kL = key.Split ([|'.'|], System.StringSplitOptions.None) |> Array.toList
-        let rec Extracto (ks:string list) (pg:ParamGroup) = 
-            match ks with
-            | [a] -> Some a
-            | head::tail -> Extracto tail pg
-            | [] -> None
 
-        Extracto kL paramG    
+        let rec Extracto (ks:string list) (pg:Rop.RopResult<ParamGroup, string>) = 
+            match ks, pg with
+            | [a], Rop.Success(pg, msgs) -> GetParamWithKey pg.nodes a
+            | head::tail, Rop.Success(pg, msgs)  -> Extracto tail (GetParamGroupWithKey pg.groups head)
+            | _, Rop.Failure errors -> Rop.Failure errors
+            | [], _ -> Rop.fail ("unexpected end of key")
+
+        Extracto kL (Rop.succeed paramG)   
 
 
     let UpdateParams (pd: IDictionary<string, Param>) (key:string) (value:float32) =

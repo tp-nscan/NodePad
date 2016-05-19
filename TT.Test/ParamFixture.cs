@@ -20,8 +20,10 @@ namespace TT.Test
         {
             var parames = Params.Godzilla;
 
-            var d = Params.GetParamGroupValue(parames, "a.b.cc.gg");
+            var d = Params.GetParamGroupValue(parames, "ring.NearCpl");
 
         }
+
+
     }
 }
