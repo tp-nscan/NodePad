@@ -27,6 +27,14 @@ module Params =
         | PF32 pF32  -> PF32( {Pb.bounds=pF32.bounds; value=newVal; key=pF32.key; descr=pF32.descr;})
 
 
+    let GetParams (pg:ParamGroup) =
+        pg.nodes |> List.toSeq
+
+
+    let GetParamGroups (pg:ParamGroup) =
+        pg.groups |> List.toSeq
+
+
     let GetKey (param:Param) =
         match param with
         | PInt pInt  -> pInt.key
