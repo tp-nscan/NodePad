@@ -10,6 +10,7 @@ type Param =
    | PInt of Pb<int>
    | PF32 of Pb<float32>
 
+
 type ParamGroup = {key:string; descr:string; groups:ParamGroup list; nodes:Param list}
 
 
@@ -68,8 +69,12 @@ module Params =
         Extracto kL (Rop.succeed paramG)   
 
 
-    let UpdateParams (pd: IDictionary<string, Param>) (key:string) (value:float32) =
-        pd.Item(key) = (UpdateParam (pd.Item(key)) value)
+    let MakeParamGroup (prgs:seq<ParamGroup>) (prs:seq<Param>) (key:string) (descr:string) =
+        {
+            ParamGroup.key=key; 
+            descr=descr; 
+            groups=prgs |> Seq.toList; 
+            nodes=prs |> Seq.toList; }
 
 
     let DisplayFreqParam     = PInt( {Pb.bounds={I.Min=0;    Max=50;};   value=10;    key="DisplayFreq"; descr="Display Frequency";})

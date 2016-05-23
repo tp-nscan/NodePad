@@ -13,6 +13,7 @@ namespace NodePad.ViewModel.Common.ParamVm
     {
         bool IsDirty { get; }
         string Key { get; }
+        string Path { get; }
         ParamVmType ParamVmType { get; }
     }
 

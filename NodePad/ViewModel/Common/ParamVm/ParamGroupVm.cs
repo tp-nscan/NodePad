@@ -1,35 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Cryptography;
 using NodePad.Common;
 using TT;
 
 namespace NodePad.ViewModel.Common.ParamVm
 {
-    public class ParamGroupVm : BindableBase, IParamVm, IParamGroupVm
+    public class ParamGroupVm : BindableBase, IParamGroupVm
     {
         private ObservableCollection<IParamVm> _children 
             = new ObservableCollection<IParamVm>();
         
-        private List<IParamGroupVm> _paramGroupVms = new List<IParamGroupVm>();
-        private List<IParamChildVm> _paramChildVms = new List<IParamChildVm>();
-        private ParamGroup _updatedParamGroup;
+        private readonly List<IParamGroupVm> _paramGroupVms = new List<IParamGroupVm>();
+        private readonly List<IParamChildVm> _paramChildVms = new List<IParamChildVm>();
 
-        public ParamGroupVm(ParamGroup paramGroup, string key)
+        public ParamGroupVm(ParamGroup paramGroup, string parentKey)
         {
             ParamGroup = paramGroup;
-
-            Key = (string.IsNullOrEmpty(key))
-                ? paramGroup.key
-                : key + "." + paramGroup.key;
+            Path = Key.MakePath(parentKey);
 
             foreach (var pram in Params.GetParams(paramGroup))
             {
                 var res = Params.ForCSharp(pram);
                 var vm = (pram.IsPF32)
-                    ? (IParamChildVm)(new F32ParamVm(Key, (Param.PF32)res.Item1))
-                    : new IntParamVm(Key, (Param.PInt)res.Item1);
+                    ? (IParamChildVm)(new F32ParamVm(Path, (Param.PF32)res.Item1))
+                    : new IntParamVm(Path, (Param.PInt)res.Item1);
 
                 _children.Add(vm);
                 _paramChildVms.Add(vm);
@@ -37,8 +33,9 @@ namespace NodePad.ViewModel.Common.ParamVm
 
             foreach (var pg in Params.GetParamGroups(paramGroup))
             {
-                var gvm = new ParamGroupVm(pg, Key);
+                var gvm = new ParamGroupVm(pg, Path);
                 _children.Add(gvm);
+                _paramGroupVms.Add(gvm);
             }
         }
 
@@ -55,13 +52,24 @@ namespace NodePad.ViewModel.Common.ParamVm
             get { return Children.Any(c=>c.IsDirty); }
         }
 
-        public string Key { get; }
+        public string Key => ParamGroup.key;
+
+        public string Path { get; }
 
         public ParamVmType ParamVmType => ParamVmType.Group;
 
         public ParamGroup UpdatedParamGroup
         {
-            get { return _updatedParamGroup; }
+            get
+            {
+                return Params.MakeParamGroup(
+                    key: Key,
+                    descr: String.Empty,
+                    prgs: _paramGroupVms.Select(gvm=>gvm.UpdatedParamGroup),
+                    prs:  _paramChildVms.Select(cvm=>cvm.UpdatedParam)
+                );
+
+            }
         }
     }
 }

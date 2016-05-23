@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive.Subjects;
 using NodePad.Common;
 using TT;
@@ -10,37 +7,24 @@ namespace NodePad.ViewModel.Common.ParamVm
 {
     public static class ParamVm
     {
-        public static string MakeKey(this string childKey, string parentKey)
+        public static string MakePath(this string childKey, string parentKey)
         {
             return (string.IsNullOrEmpty(parentKey))
                 ? childKey
                 : parentKey + "." + childKey;
         }
-
-
-        //public static IDictionary<string, Param> GetParamictionary(this IEnumerable<IParamVm> paramsE)
-        //{
-
-        //}
-
-    //public static IDictionary<string, Param> GetParamictionary(this IEnumerable<IParamVm> paramsE)
-        //{
-        //    return paramsE.Select(pvm => pvm.IsDirty ?
-        //         new Tuple<string, Param>(pvm.Key, pvm.MakeUpdated() )
-        //       : new Tuple<string, Param>(pvm.Key, pvm.Param )
-        //                 ).ToDictionary(keySelector: kp => kp.Item1, 
-        //                                elementSelector: kp => kp.Item2);
-        //}
-
     }
 
     public abstract class ParamBaseVm : BindableBase, IParamChildVm
     {
-        protected ParamBaseVm(string key, Param param)
+        protected ParamBaseVm(string parentKey, Param param)
         {
-            Key = key;
+
+            Path = Key.MakePath(parentKey);
             Param = param;
         }
+
+        public string Key => Params.GetKey(Param);
 
         protected readonly Subject<IParamVm> ParamBaseVmChanged = new Subject<IParamVm>();
 
@@ -50,7 +34,7 @@ namespace NodePad.ViewModel.Common.ParamVm
 
         public bool IsDirty { get; protected set; }
 
-        public string Key { get; }
+        public string Path { get; }
 
         public abstract Param UpdatedParam { get; }
 
@@ -61,7 +45,7 @@ namespace NodePad.ViewModel.Common.ParamVm
 
     public class IntParamVm : ParamBaseVm
     {
-        public IntParamVm(string key, Param.PInt param) : base(key, param)
+        public IntParamVm(string path, Param.PInt param) : base(path, param)
         {
             _value = param.Item.value;
             Interval = param.Item.bounds;
@@ -97,7 +81,7 @@ namespace NodePad.ViewModel.Common.ParamVm
 
     public class F32ParamVm : ParamBaseVm
     {
-        public F32ParamVm(string key, Param.PF32 param) : base(key, param)
+        public F32ParamVm(string path, Param.PF32 param) : base(path, param)
         {
             _value = param.Item.value;
             Interval = param.Item.bounds;
