@@ -22,7 +22,8 @@
                 <mui:Link DisplayName="Grid4d" Source="/View/Pages/Sandbox/Grid4dPage.xaml" />
                 <mui:Link DisplayName="Hist1d" Source="/View/Pages/Sandbox/Hist1dPage.xaml" />
                 <mui:Link DisplayName="Hist2d" Source="/View/Pages/Sandbox/Hist2dPage.xaml" />
-                <mui:Link DisplayName="Legend" Source="/View/Pages/Sandbox/LegendPage.xaml" /> 
+                <mui:Link DisplayName="Legend" Source="/View/Pages/Sandbox/LegendPage.xaml" />
+                <mui:Link DisplayName="Param" Source="/View/Pages/Sandbox/ParamPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         

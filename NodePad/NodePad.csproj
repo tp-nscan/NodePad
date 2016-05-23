@@ -111,7 +111,9 @@
     <Compile Include="ViewModel\Common\IntVm.cs" />
     <Compile Include="ViewModel\Common\ParamVm\ParamBaseVm.cs" />
     <Compile Include="ViewModel\Common\ParamVm\ParamGroupVm.cs" />
+    <Compile Include="ViewModel\Common\ParamVm\ParamVmType.cs" />
     <Compile Include="ViewModel\Design\Common\Grid2D2IVmD.cs" />
+    <Compile Include="ViewModel\Design\Common\ParamGroupVmD.cs" />
     <Compile Include="ViewModel\Design\Common\SliderVmD.cs" />
     <Compile Include="ViewModel\Common\FloatCmdVm.cs" />
     <Compile Include="ViewModel\Common\GraphVm.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="ViewModel\Pages\Sandbox\Hist1dPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\Hist2dPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\LegendPageVm.cs" />
+    <Compile Include="ViewModel\Pages\Sandbox\ParamPageVm.cs" />
     <Compile Include="View\Common\GraphControl.xaml.cs">
       <DependentUpon>GraphControl.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,9 @@
     </Compile>
     <Compile Include="View\Common\Hist2DControl.xaml.cs">
       <DependentUpon>Hist2DControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Common\ParamControl.xaml.cs">
+      <DependentUpon>ParamControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Common\SliderControl.xaml.cs">
       <DependentUpon>SliderControl.xaml</DependentUpon>
@@ -224,6 +230,9 @@
     </Compile>
     <Compile Include="View\Pages\Sandbox\LegendPage.xaml.cs">
       <DependentUpon>LegendPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\Sandbox\ParamPage.xaml.cs">
+      <DependentUpon>ParamPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -293,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Common\ParamControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Common\ProjectionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -360,6 +373,10 @@
     <Page Include="View\Pages\Sandbox\LegendPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\Sandbox\ParamPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>

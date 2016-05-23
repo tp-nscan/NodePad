@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Subjects;
 using NodePad.Common;
@@ -7,28 +8,33 @@ using TT;
 
 namespace NodePad.ViewModel.Common.ParamVm
 {
-    public interface IParamBaseVm
-    {
-        Param Param { get; }
-        Param MakeUpdated();
-        bool IsDirty { get; }
-        string Key { get; }
-    }
-
     public static class ParamVm
     {
-        public static IDictionary<string, Param> GetParamictionary(this IEnumerable<IParamBaseVm> paramsE)
+        public static string MakeKey(this string childKey, string parentKey)
         {
-            return paramsE.Select(pvm => pvm.IsDirty ?
-                 new Tuple<string, Param>(pvm.Key, pvm.MakeUpdated() )
-               : new Tuple<string, Param>(pvm.Key, pvm.Param )
-                         ).ToDictionary(keySelector: kp => kp.Item1, 
-                                        elementSelector: kp => kp.Item2);
+            return (string.IsNullOrEmpty(parentKey))
+                ? childKey
+                : parentKey + "." + childKey;
         }
+
+
+        //public static IDictionary<string, Param> GetParamictionary(this IEnumerable<IParamVm> paramsE)
+        //{
+
+        //}
+
+    //public static IDictionary<string, Param> GetParamictionary(this IEnumerable<IParamVm> paramsE)
+        //{
+        //    return paramsE.Select(pvm => pvm.IsDirty ?
+        //         new Tuple<string, Param>(pvm.Key, pvm.MakeUpdated() )
+        //       : new Tuple<string, Param>(pvm.Key, pvm.Param )
+        //                 ).ToDictionary(keySelector: kp => kp.Item1, 
+        //                                elementSelector: kp => kp.Item2);
+        //}
 
     }
 
-    public abstract class ParamBaseVm : BindableBase, IParamBaseVm, IReportsChanges<IParamBaseVm>
+    public abstract class ParamBaseVm : BindableBase, IParamChildVm
     {
         protected ParamBaseVm(string key, Param param)
         {
@@ -36,16 +42,20 @@ namespace NodePad.ViewModel.Common.ParamVm
             Param = param;
         }
 
-        protected readonly Subject<IParamBaseVm> ParamBaseVmChanged = new Subject<IParamBaseVm>();
-        public IObservable<IParamBaseVm> ReportAChange => ParamBaseVmChanged;
+        protected readonly Subject<IParamVm> ParamBaseVmChanged = new Subject<IParamVm>();
+
+        public IObservable<IParamVm> ReportAChange => ParamBaseVmChanged;
 
         public Param Param { get; }
-
-        public abstract Param MakeUpdated();
 
         public bool IsDirty { get; protected set; }
 
         public string Key { get; }
+
+        public abstract Param UpdatedParam { get; }
+
+        public ParamVmType ParamVmType => ParamVmType.Node;
+
     }
 
 
@@ -60,10 +70,8 @@ namespace NodePad.ViewModel.Common.ParamVm
             NumberFormat = VmUtil.NumberFormat(Interval.Min, Interval.Max);
         }
 
-        public override Param MakeUpdated()
-        {
-            return Params.UpdateParam(Param, Value);
-        }
+        public override Param UpdatedParam => 
+            (IsDirty) ? Params.UpdateParam(Param, Value) : Param;
 
         private int _value;
         public int  Value
@@ -98,10 +106,8 @@ namespace NodePad.ViewModel.Common.ParamVm
             NumberFormat = VmUtil.NumberFormat(Interval.Min, Interval.Max);
         }
 
-        public override Param MakeUpdated()
-        {
-            return Params.UpdateParam(Param, Value);
-        }
+        public override Param UpdatedParam =>
+            (IsDirty) ? Params.UpdateParam(Param, Value) : Param;
 
         private float _value;
         public float Value
