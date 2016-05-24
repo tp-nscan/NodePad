@@ -28,11 +28,11 @@ module Params =
         | PF32 pF32  -> PF32( {Pb.bounds=pF32.bounds; value=newVal; key=pF32.key; descr=pF32.descr;})
 
 
-    let GetParams (pg:ParamGroup) =
+    let GetChildParams (pg:ParamGroup) =
         pg.nodes |> List.toSeq
 
 
-    let GetParamGroups (pg:ParamGroup) =
+    let GetChildParamGroups (pg:ParamGroup) =
         pg.groups |> List.toSeq
 
 
@@ -40,6 +40,19 @@ module Params =
         match param with
         | PInt pInt  -> pInt.key
         | PF32 pF32  -> pF32.key
+
+
+    let GetAllParams (pg:ParamGroup) =
+        let rec GetTupy (pg:ParamGroup) (pk:String) =
+            let r = if pk = "" then "" else pk + "."
+            match pg.groups with
+            | [] -> pg.nodes |> List.map(fun n-> (r + pg.key + "." + GetKey(n)))
+            | b -> pg.nodes  |> List.map(fun n-> (r + pg.key + "." + GetKey(n)))
+                             |> List.append ( GetTupy (pg.groups.Head) (r + pg.key) )
+        GetTupy pg "" |> List.toSeq
+
+
+
 
 
     let GetParamGroupWithKey<'a> (pram: ParamGroup list) (key:string) =

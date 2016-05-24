@@ -19,9 +19,8 @@ namespace NodePad.ViewModel.Common.ParamVm
     {
         protected ParamBaseVm(string parentKey, Param param)
         {
-
-            Path = Key.MakePath(parentKey);
             Param = param;
+            Path = Key.MakePath(parentKey);
         }
 
         public string Key => Params.GetKey(Param);

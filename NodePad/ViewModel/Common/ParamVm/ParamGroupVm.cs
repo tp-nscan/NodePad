@@ -20,7 +20,7 @@ namespace NodePad.ViewModel.Common.ParamVm
             ParamGroup = paramGroup;
             Path = Key.MakePath(parentKey);
 
-            foreach (var pram in Params.GetParams(paramGroup))
+            foreach (var pram in Params.GetChildParams(paramGroup))
             {
                 var res = Params.ForCSharp(pram);
                 var vm = (pram.IsPF32)
@@ -31,7 +31,7 @@ namespace NodePad.ViewModel.Common.ParamVm
                 _paramChildVms.Add(vm);
             }
 
-            foreach (var pg in Params.GetParamGroups(paramGroup))
+            foreach (var pg in Params.GetChildParamGroups(paramGroup))
             {
                 var gvm = new ParamGroupVm(pg, Path);
                 _children.Add(gvm);

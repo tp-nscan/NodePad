@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepoLocalDB.Test", "RepoLoc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Test", "TT.Test\TT.Test.csproj", "{003CA69C-CCA1-4819-8C81-2EA0EC65EE8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotePad.Test", "NotePad.Test\NotePad.Test.csproj", "{F2CE59C7-D485-4D9F-BC27-EF86897BFDAB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.projitems*{eeda74fc-ca5a-4c06-9654-2600b74e2d1d}*SharedItemsImports = 13
@@ -57,6 +59,10 @@ Global
 		{003CA69C-CCA1-4819-8C81-2EA0EC65EE8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{003CA69C-CCA1-4819-8C81-2EA0EC65EE8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{003CA69C-CCA1-4819-8C81-2EA0EC65EE8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2CE59C7-D485-4D9F-BC27-EF86897BFDAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2CE59C7-D485-4D9F-BC27-EF86897BFDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2CE59C7-D485-4D9F-BC27-EF86897BFDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2CE59C7-D485-4D9F-BC27-EF86897BFDAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
