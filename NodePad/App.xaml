@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/View/Common/CommonThemes.xaml"/>
+                <ResourceDictionary Source="/View/Common/Param/ParamTreeTemplateSelector.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

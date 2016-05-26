@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Reactive.Subjects;
 using NodePad.Common;
 using TT;
@@ -14,6 +15,7 @@ namespace NodePad.ViewModel.Common.ParamVm
                 : parentKey + "." + childKey;
         }
     }
+
 
     public abstract class ParamBaseVm : BindableBase, IParamChildVm
     {
@@ -38,7 +40,7 @@ namespace NodePad.ViewModel.Common.ParamVm
         public abstract Param UpdatedParam { get; }
 
         public ParamVmType ParamVmType => ParamVmType.Node;
-
+        public abstract ObservableCollection<IParamVm> Children { get; }
     }
 
 
@@ -55,6 +57,9 @@ namespace NodePad.ViewModel.Common.ParamVm
 
         public override Param UpdatedParam => 
             (IsDirty) ? Params.UpdateParam(Param, Value) : Param;
+
+        public override ObservableCollection<IParamVm> Children { get; } 
+            = new ObservableCollection<IParamVm>();
 
         private int _value;
         public int  Value
@@ -91,6 +96,10 @@ namespace NodePad.ViewModel.Common.ParamVm
 
         public override Param UpdatedParam =>
             (IsDirty) ? Params.UpdateParam(Param, Value) : Param;
+
+
+        public override ObservableCollection<IParamVm> Children { get; }
+            = new ObservableCollection<IParamVm>();
 
         private float _value;
         public float Value

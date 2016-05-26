@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:common="clr-namespace:NodePad.View.Common"
+             xmlns:param="clr-namespace:NodePad.View.Common.Param"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <common:ParamControl DataContext="ParamGroupVm"/>
+                <param:ParamControl DataContext="{ Binding ParamGroupVm }"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TT;
 
 namespace NodePad.ViewModel.Common.ParamVm
@@ -15,6 +16,7 @@ namespace NodePad.ViewModel.Common.ParamVm
         string Key { get; }
         string Path { get; }
         ParamVmType ParamVmType { get; }
+        ObservableCollection<IParamVm> Children { get; } 
     }
 
     public interface IParamGroupVm : IParamVm

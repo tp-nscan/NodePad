@@ -171,9 +171,10 @@
     <Compile Include="View\Common\Hist2DControl.xaml.cs">
       <DependentUpon>Hist2DControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Common\ParamControl.xaml.cs">
+    <Compile Include="View\Common\Param\ParamControl.xaml.cs">
       <DependentUpon>ParamControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Common\Param\ParamTreeTemplateSelector.cs" />
     <Compile Include="View\Common\SliderControl.xaml.cs">
       <DependentUpon>SliderControl.xaml</DependentUpon>
     </Compile>
@@ -302,7 +303,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Common\ParamControl.xaml">
+    <Page Include="View\Common\Param\ParamControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Common\Param\ParamTreeTemplateSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
