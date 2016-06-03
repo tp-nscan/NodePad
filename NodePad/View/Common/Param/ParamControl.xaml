@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="300"
              d:DataContext="{d:DesignInstance Type=common:ParamGroupVmD, IsDesignTimeCreatable=True}">
-    
+
     <UserControl.Resources>
         <HierarchicalDataTemplate x:Key="DataTemplateP" ItemsSource="{Binding Children}" 
                                   DataType="{x:Type paramVm:IParamGroupVm}">
@@ -18,10 +18,28 @@
                                   DataType="{x:Type paramVm:IParamVm}">
             <TextBlock Text="{Binding Key}" Foreground="Blue"></TextBlock>
         </HierarchicalDataTemplate>
+        <ControlTemplate x:Key="TreeViewControlTemplate1" TargetType="{x:Type TreeView}">
+            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" >
+                <ScrollViewer x:Name="_tv_scrollviewer_" Background="{TemplateBinding Background}" CanContentScroll="False" Focusable="False" 
+                              HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" 
+                              Padding="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                    <ItemsPresenter/>
+                </ScrollViewer>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="True">
+                    <Setter Property="CanContentScroll" TargetName="_tv_scrollviewer_" Value="True"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </UserControl.Resources>
-    
+
     <Grid>
-        <TreeView ItemsSource="{Binding Children}" ItemTemplateSelector="{DynamicResource ParamTemplateSelector}">
+        <TreeView ItemsSource="{Binding Children}" ItemTemplateSelector="{DynamicResource ParamTemplateSelector}" Template="{DynamicResource TreeViewControlTemplate1}">
 
         </TreeView>
     </Grid>

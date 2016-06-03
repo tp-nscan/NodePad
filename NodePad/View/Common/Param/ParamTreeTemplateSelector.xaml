@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:NodePad.View.Common.Param">
+                    xmlns:local="clr-namespace:NodePad.View.Common.Param"
+                    xmlns:common="clr-namespace:NodePad.View.Common">
 
 
     <!--<DataTemplate x:Key="GroupTemplate">
@@ -13,7 +14,7 @@
     </HierarchicalDataTemplate>
 
     <DataTemplate x:Key="ParamTemplate">
-        <TextBlock Foreground="Blue" Text="{Binding Key, Mode=OneWay}"/>
+        <common:SliderControl Width="150"/>
     </DataTemplate>
 
     <DataTemplate x:Key="DefaultTemplate">

@@ -61,6 +61,12 @@ namespace NodePad.ViewModel.Common.ParamVm
         public override ObservableCollection<IParamVm> Children { get; } 
             = new ObservableCollection<IParamVm>();
 
+        public string LegendMaximum => Interval.Max.ToString(NumberFormat);
+
+        public string LegendMinimum => Interval.Min.ToString(NumberFormat);
+
+        public string LegendValue => Value.ToString(NumberFormat);
+
         private int _value;
         public int  Value
         {
@@ -69,6 +75,7 @@ namespace NodePad.ViewModel.Common.ParamVm
             {
                 if (!SetProperty(ref _value, value)) return;
                 ParamBaseVmChanged.OnNext(this);
+                OnPropertyChanged("LegendValue");
                 IsDirty = true;
             }
         }
@@ -101,6 +108,12 @@ namespace NodePad.ViewModel.Common.ParamVm
         public override ObservableCollection<IParamVm> Children { get; }
             = new ObservableCollection<IParamVm>();
 
+        public string LegendMaximum => Interval.Max.ToString(NumberFormat);
+
+        public string LegendMinimum => Interval.Min.ToString(NumberFormat);
+
+        public string LegendValue => Value.ToString(NumberFormat);
+
         private float _value;
         public float Value
         {
@@ -109,6 +122,7 @@ namespace NodePad.ViewModel.Common.ParamVm
             {
                 if (!SetProperty(ref _value, value)) return;
                 ParamBaseVmChanged.OnNext(this);
+                OnPropertyChanged("LegendValue");
                 IsDirty = true;
             }
         }
