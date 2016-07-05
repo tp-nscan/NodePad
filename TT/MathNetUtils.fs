@@ -199,12 +199,11 @@ module GenMatrix =
 
 
     let DenseUF32 (bounds:Sz2<int>) (seed:int) =
-        Dense GenS.SeqOfRandUF32 bounds seed
+//        Dense GenS.SeqOfRandUF32 bounds seed
 
-
-//        MatrixUt.DenseFromSeq bounds ( GenS.SeqOfRandUF32 (GenV.Twist seed)
-//                                                       |> Seq.take(BT.Count bounds)
-//                                                       |> Seq.toArray)
+        MatrixUt.DenseFromSeq bounds ( GenS.SeqOfRandUF32 (GenV.Twist seed)
+                                                       |> Seq.take(BT.Count bounds)
+                                                       |> Seq.toArray)
 
 //        let valA = GenS.SeqOfRandUF32 (GenV.Twist seed)
 //                   |> Seq.take(BT.Count bounds)

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using NodePad.Common;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
     public class Star5Grid
     {
@@ -63,9 +62,9 @@ namespace NodePad.Model
 
             //zippy.ForEach(
 
-            //    tup => tup.Item1.Update(
+            //    tup => tup.Item1.UpdateP(
             //        step: step,
-            //        noise: tup.Item2 * noise,
+            //        noiseLevel: tup.Item2 * noiseLevel,
             //        nfDecay: nfDecay,
             //        absDeltaToNoise: absDeltaToNoise,
             //        nfCpl: nfCpl,
@@ -73,9 +72,9 @@ namespace NodePad.Model
 
             //    );
 
-            //Parallel.ForEach(zippy, tup => tup.Item1.Update(
+            //Parallel.ForEach(zippy, tup => tup.Item1.UpdateP(
             //    step: step,
-            //    noise: tup.Item2 * noise,
+            //    noiseLevel: tup.Item2 * noiseLevel,
             //    nfDecay: nfDecay,
             //    absDeltaToNoise: absDeltaToNoise,
             //    nfCpl: nfCpl,

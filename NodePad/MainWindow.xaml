@@ -34,6 +34,7 @@
                 <mui:Link DisplayName="Pairs" Source="View/Pages/CPU/PairsPageControl.xaml" />
                 <mui:Link DisplayName="Ring4" Source="View/Pages/CPU/Ring4Page.xaml" />
                 <mui:Link DisplayName="Ring5" Source="View/Pages/CPU/Ring5Page.xaml" />
+                <mui:Link DisplayName="Ring6" Source="View/Pages/CPU/Ring6Page.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         

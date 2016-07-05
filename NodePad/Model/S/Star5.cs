@@ -1,7 +1,7 @@
 ﻿using System;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
     public class Star5
     {
@@ -53,7 +53,7 @@ namespace NodePad.Model
         //                    Top.NoiseField + Bottom.NoiseField;
         //}
 
-        //public void Update(float step, 
+        //public void UpdateP(float step, 
         //                   float noise, 
         //                   float nfDecay,
         //                   float absDeltaToNoise, 

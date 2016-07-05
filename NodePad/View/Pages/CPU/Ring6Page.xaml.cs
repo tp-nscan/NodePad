@@ -2,12 +2,12 @@
 
 namespace NodePad.View.Pages.CPU
 {
-    public partial class RingPage
+    public partial class Ring6Page
     {
-        public RingPage()
+        public Ring6Page()
         {
             InitializeComponent();
-            DataContext = new RingPageVm();
+            DataContext = new Ring6PageVm();
         }
     }
 }

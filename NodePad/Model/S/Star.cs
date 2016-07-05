@@ -1,29 +1,25 @@
 ﻿using System;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
-    public class Star3
+    public class Star
     {
-        public Star3(int row, int column, 
-            float curValue, float fixedValue)
+        public Star(int row, int column, float curValue)
         {
             Row = row;
             Column = column;
             CurValue = curValue;
-            FixedValue = fixedValue;
         }
 
-        public Star3 Left { get; set; }
-        public Star3 Right { get; set; }
-        public Star3 Top { get; set; }
-        public Star3 Bottom { get; set; }
+        public Star Left { get; set; }
+        public Star Right { get; set; }
+        public Star Top { get; set; }
+        public Star Bottom { get; set; }
 
         public int Row { get; private set; }
         public int Column { get; private set; }
-
         public float CurValue { get; private set; }
-        public float FixedValue { get; private set; }
 
         public float Delta { get; private set; }
 
@@ -36,23 +32,19 @@ namespace NodePad.Model
 
         public void CalcDelta()
         {
-            Delta =  NNfunc.ModUFDelta(CurValue, Left.CurValue);
+            Delta  = NNfunc.ModUFDelta(CurValue, Left.CurValue);
             Delta += NNfunc.ModUFDelta(CurValue, Right.CurValue);
             Delta += NNfunc.ModUFDelta(CurValue, Top.CurValue);
             Delta += NNfunc.ModUFDelta(CurValue, Bottom.CurValue);
-           // Delta += NNfunc.ModUFDelta(CurValue, Bottom.CurValue);
 
             AbsDelta = Math.Abs(DeltaL) + Math.Abs(DeltaR) + Math.Abs(DeltaT) + Math.Abs(DeltaB);
+
         }
 
-        public void Update(float step, float noise, float ffCpl)
+        public void Update(float step, float noise)
         {
-            if (Math.Abs(FixedValue) > NumUt.Epsilon)
-            {
-                Delta += ffCpl * NNfunc.ModUFDelta(CurValue, FixedValue);
-            }
-
-            CurValue = NumUt.ModUF32(CurValue + Delta*step + noise);
+            CurValue = NumUt.ModUF32(CurValue + Delta * step + noise);
         }
+
     }
 }

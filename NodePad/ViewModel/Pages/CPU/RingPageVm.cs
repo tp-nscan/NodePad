@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using NodePad.Common;
 using NodePad.Model;
+using NodePad.Model.S;
 using NodePad.ViewModel.Common;
 using TT;
 
@@ -15,33 +16,27 @@ namespace NodePad.ViewModel.Pages.CPU
     {
         public RingPageVm()
         {
-            Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 1");
 
             StepSizeVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.02, "0.00", "StepSize")
                                             { Title = "Step Size", Value = 0.1f };
 
-            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0", "DisplayFrequency")
-                                            { Title = "Display Frequency", Value = 2 };
+            DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 100.0f), 1, "0", "DisplayFrequency") { Title = "Display Frequency", Value = 50 };
 
             NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000", "NoiseLevel")
-                                            { Title = "Noise", Value = 0.03f };
+                                            { Title = "Noise", Value = 0.02f };
 
-            StarGrid = StarProcs.RandStarGrid(Bounds, 1293);
+            Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 1");
+
+            StarGrid = StarProcs.RandStarGrid(Bounds, 1293, 444);
             UpdateUi();
         }
 
-        private Grid2DVm<float> _graphVm;
 
-        public Grid2DVm<float> Grid2DVm
-        {
-            get { return _graphVm; }
-            set { SetProperty(ref _graphVm, value); }
-        }
 
 
         #region local vars
 
-        private static readonly int GridStride = 128;
+        private static readonly int GridStride = 256;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
         private StarGrid StarGrid { get; set; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -61,6 +56,13 @@ namespace NodePad.ViewModel.Pages.CPU
         public int Generation => StarGrid.Generation;
 
         public SliderVm DisplayFrequencySliderVm { get; }
+
+        private Grid2DVm<float> _grid2DVm;
+        public Grid2DVm<float> Grid2DVm
+        {
+            get { return _grid2DVm; }
+            set { SetProperty(ref _grid2DVm, value); }
+        }
 
         #endregion
 
@@ -87,7 +89,8 @@ namespace NodePad.ViewModel.Pages.CPU
                 for (var i = 0; _isRunning; i++)
                 {
                     StarGrid.GetDeltas();
-                    StarGrid.Update(StepSizeVm.Value, NoiseLevelVm.Value);
+                    StarGrid.UpdateP(StepSizeVm.Value, NoiseLevelVm.Value);
+
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {
                         _isRunning = false;

@@ -14,7 +14,7 @@
     </HierarchicalDataTemplate>
 
     <DataTemplate x:Key="ParamTemplate">
-        <common:SliderControl Width="150"/>
+        <common:SliderControl Width="200"/>
     </DataTemplate>
 
     <DataTemplate x:Key="DefaultTemplate">

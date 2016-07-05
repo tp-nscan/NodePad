@@ -1,28 +1,25 @@
 ﻿using System;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
-    public class Star4
+    public class Star2
     {
-        public Star4(int row, int column, 
-                     float curValue, float fixedValue)
+        public Star2(int row, int column, float curValue)
         {
             Row = row;
             Column = column;
             CurValue = curValue;
-            FixedValue = fixedValue;
         }
 
-        public Star4 Left { get; set; }
-        public Star4 Right { get; set; }
-        public Star4 Top { get; set; }
-        public Star4 Bottom { get; set; }
+        public Star2 Left { get; set; }
+        public Star2 Right { get; set; }
+        public Star2 Top { get; set; }
+        public Star2 Bottom { get; set; }
 
         public int Row { get; private set; }
         public int Column { get; private set; }
         public float CurValue { get; private set; }
-        public float FixedValue { get; private set; }
 
         public float Delta { get; private set; }
 
@@ -46,27 +43,18 @@ namespace NodePad.Model
 
             Delta = DeltaL + DeltaR + DeltaT + DeltaB;
 
-            AbsDelta = Math.Abs(DeltaL) + Math.Abs(DeltaR) +
+            AbsDelta = Math.Abs(DeltaL) + Math.Abs(DeltaR) + 
                        Math.Abs(DeltaT) + Math.Abs(DeltaB);
 
-            NoiseFieldCpl = Left.NoiseField + Right.NoiseField +
+            NoiseFieldCpl = Left.NoiseField + Right.NoiseField + 
                             Top.NoiseField + Bottom.NoiseField;
         }
 
-        public void Update(float step, 
-                           float noise, 
-                           float nfDecay,
-                           float absDeltaToNoise, 
-                           float nfCpl,
-                           float ffCpl)
+        public void Update(float step, float noise, float nfDecay, 
+                           float absDeltaToNoise, float nfCpl)
         {
-            if (Math.Abs(FixedValue) > NumUt.Epsilon)
-            {
-                Delta += ffCpl * NNfunc.ModUFDelta(CurValue, FixedValue);
-            }
-
-            NoiseField = NoiseField * nfDecay +
-                         AbsDelta * absDeltaToNoise +
+            NoiseField = NoiseField * nfDecay + 
+                         AbsDelta * absDeltaToNoise + 
                          NoiseFieldCpl * nfCpl;
 
             CurValue = NumUt.ModUF32(CurValue + Delta * step + noise * NoiseField);

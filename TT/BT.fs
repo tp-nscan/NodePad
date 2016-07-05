@@ -103,7 +103,7 @@ module BTInline =
         else if res > (^a : (member Max : ^b) range)  then (^a : (member Max : ^b) range) 
         else res
 
-//
+
 //    let inline AddInRangeI bounds a b =
 //        let res = a + b
 //        if res < bounds.Min then bounds.Min
@@ -285,6 +285,8 @@ module BT =
     let MutateLS2V ls2V f =
         {LS2V.X1=ls2V.X1; LS2V.X2=ls2V.X2; LS2V.Y1=ls2V.Y1; LS2V.Y2=ls2V.Y2; V = f ls2V.V}
         
+    let AddP2 (p2L:P2<int>) (p2R:P2<int>) = 
+        {P2.X = p2L.X + p2R.X ; Y = p2L.Y + p2R.Y;}
 
 
 module AUt =
@@ -327,12 +329,12 @@ module A2dUt =
 
 
     let Raster2d (strides:Sz2<int>) =
-        seq { for col in 0 .. strides.X - 1 do
-                for row in 0 .. strides.Y - 1 do
+        seq { for row in 0 .. strides.Y - 1 do
+                for col in 0 .. strides.X - 1 do
                     yield {P2.X= col; Y= row;}
             }
-
         
+
     let MemoSF2 stride f =
         let hs = stride / 2
         let hsf = float32 hs

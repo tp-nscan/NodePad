@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NodePad.Common;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
     public class Star3Grid
     {

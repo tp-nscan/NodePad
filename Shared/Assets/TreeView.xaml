@@ -145,10 +145,10 @@
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemBackgroundHover}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ItemTextHover}"/>
                         </Trigger>
-                        <Trigger Property="IsSelected" Value="true">
+                        <!--<Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemBackgroundSelected}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ItemTextSelected}"/>
-                        </Trigger>
+                        </Trigger>-->
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource ItemTextDisabled}"/>
                         </Trigger>

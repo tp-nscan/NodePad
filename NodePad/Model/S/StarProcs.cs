@@ -1,15 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
     public static class StarProcs
     {
-        public static StarGrid RandStarGrid(Sz2<int> bounds, int seed)
+        public static StarGrid RandStarGrid(Sz2<int> bounds, int initSeed, int updateSeed)
         {
-            return new StarGrid(GenA2.RandUF32(bounds, seed), seed);
+            return new StarGrid(GenA2.RandUF32(bounds, initSeed), updateSeed);
         } 
 
         public static Star[,] MakeStarGrid(float[,] initVals)
@@ -47,4 +46,5 @@ namespace NodePad.Model
                 new P2V<int, float>(x:s.X, y:s.Y, v:s.V.CurValue));
         }
     }
+
 }

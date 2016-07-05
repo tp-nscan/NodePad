@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using NodePad.Common;
 using NodePad.Model;
+using NodePad.Model.S;
 using NodePad.ViewModel.Common;
 using TT;
 

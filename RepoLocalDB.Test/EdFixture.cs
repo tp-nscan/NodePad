@@ -46,7 +46,7 @@ namespace RepoLocalDB.Test
         public void TestFloatA2ToBase64()
         {
             var bounds = new Sz2<int>(3, 5);
-            var aIn = GenA2.RandF32(bounds, 123);
+            var aIn = GenA2.RandUF32(bounds, 123);
             var base64 = BTconv.F32A2toBase64(aIn);
             var aOut = BTconv.Base64ToF32A2(bounds, base64);
 
@@ -70,7 +70,7 @@ namespace RepoLocalDB.Test
         public void TestDenseF32MatrixToBase64()
         {
             var bounds = new Sz2<int>(3, 5);
-            var aIn = GenMatrix.DenseF32(bounds, 123);
+            var aIn = GenMatrix.DenseUF32(bounds, 123);
             var base64 = MathNetConv.DenseF32MatrixtoBase64(aIn);
             var aOut = MathNetConv.Base64ToDenseF32Matrix(bounds, base64);
 

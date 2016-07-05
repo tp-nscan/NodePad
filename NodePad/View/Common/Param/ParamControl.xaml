@@ -10,6 +10,11 @@
              d:DataContext="{d:DesignInstance Type=common:ParamGroupVmD, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
+        <!--<Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemBackgroundSelected}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ItemTextSelected}"/>-->
+        <!--<SolidColorBrush x:Key="ItemBackgroundSelected" Color="Red"/>
+        <SolidColorBrush x:Key="ItemTextSelected" 
+                 Color="{Binding Source={StaticResource ItemText}, Path=Color}"/>-->
         <HierarchicalDataTemplate x:Key="DataTemplateP" ItemsSource="{Binding Children}" 
                                   DataType="{x:Type paramVm:IParamGroupVm}">
             <TextBlock Text="{Binding Key}" Foreground="Red"></TextBlock>

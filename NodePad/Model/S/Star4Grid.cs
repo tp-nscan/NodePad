@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using NodePad.Common;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
-    public class Star2Grid
+    public class Star4Grid
     {
         public int Seed { get; }
 
-        public Star2Grid(float[,] initVals, int seed)
+        public Star4Grid(float[,] initVals, float[,] fixedVals, int seed)
         {
             Seed = seed;
             Noise = GenS.NormalSF32(GenV.Twist(seed), 0.0f, 1.0f);
-            Stars = Star2Procs.MakeStarGrid(initVals);
+            Stars = Star4Procs.MakeStarGrid(initVals, fixedVals);
             Rows = Stars.GetLength(1);
             Columns = Stars.GetLength(0);
             Generation = 0;
@@ -27,7 +27,7 @@ namespace NodePad.Model
 
         public int Columns { get; }
 
-        public Star2[,] Stars { get; }
+        public Star4[,] Stars { get; }
 
         public int Generation { get; private set; }
 
@@ -36,22 +36,24 @@ namespace NodePad.Model
             A2dUt.flattenRowMajor(Stars).ForEach(s => s.CalcDelta());
         }
 
-        public void Update(float step, 
-                           float noise, 
-                           float nfDecay, 
-                           float absDeltaToNoise, 
-                           float nfCpl)
+        public void Update(float step,
+                           float noise,
+                           float nfDecay,
+                           float absDeltaToNoise,
+                           float nfCpl,
+                           float ffCpl)
         {
             var zippy = A2dUt.flattenRowMajor(Stars)
                              .Zip(Noise.Take(A2dUt.Count(Stars)),
-                                 (a, b) => new Tuple<Star2, float>(a, b));
+                                 (a, b) => new Tuple<Star4, float>(a, b));
 
             Parallel.ForEach(zippy, tup => tup.Item1.Update(
-                step: step, 
-                noise: tup.Item2 * noise, 
+                step: step,
+                noise: tup.Item2 * noise,
                 nfDecay: nfDecay,
                 absDeltaToNoise: absDeltaToNoise,
-                nfCpl: nfCpl));
+                nfCpl: nfCpl,
+                ffCpl: ffCpl));
 
 
             Generation++;

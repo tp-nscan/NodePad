@@ -320,16 +320,16 @@ module DesignData =
                  Y = yf; 
                  V = ColorSets.GetLegColor leg (NNfunc.Cached.StretchO xf yf)
            })
-
-
-    let GradientStarAs2d (strides:Sz2<int>) =
-        (Grid2dCnxn.GradientStar strides)
-        |> Grid2dCnxn.Cnx4dVToCnx2d strides.X
-
-
-    let NoiseyStarAs2d bounds =
-        Grid2dCnxn.NoiseyLocalRing bounds 127 0.0f 0.5f
-        |> Grid2dCnxn.Cnx4dVToCnx2d bounds.X
+//
+//
+//    let GradientStarAs2d (strides:Sz2<int>) =
+//        (Grid2dCnxn.GradientStar strides)
+//        |> Grid2dCnxn.Cnx4dVToCnx2d strides.X
+//
+//
+//    let NoiseyStarAs2d bounds =
+//        Grid2dCnxn.NoiseyLocalRing bounds 127 0.0f 0.5f
+//        |> Grid2dCnxn.Cnx4dVToCnx2d bounds.X
 
 
     let Noisey2D2IGrid bounds =

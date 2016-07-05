@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TT;
 
-namespace NodePad.Model
+namespace NodePad.Model.S
 {
     public static class Star3Procs
     {
