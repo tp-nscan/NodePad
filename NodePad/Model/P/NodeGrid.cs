@@ -38,28 +38,30 @@ namespace NodePad.Model.P
 
         public P1V<int, float> Update(int index, float noise, float step)
         {
-            var CurValue = Values[index];
-            var DeltaL = NNfunc.ModUFDelta(CurValue, Values[Left[index]]);
-            var DeltaR = NNfunc.ModUFDelta(CurValue, Values[Right[index]]);
-            var DeltaT = NNfunc.ModUFDelta(CurValue, Values[Top[index]]);
-            var DeltaB = NNfunc.ModUFDelta(CurValue, Values[Bottom[index]]);
+            var curValue = Values[index];
+            var deltaL = NNfunc.ModUFDelta(curValue, Values[Left[index]]);
+            var deltaR = NNfunc.ModUFDelta(curValue, Values[Right[index]]);
+            var deltaT = NNfunc.ModUFDelta(curValue, Values[Top[index]]);
+            var deltaB = NNfunc.ModUFDelta(curValue, Values[Bottom[index]]);
 
-            var ptb = Values[index] + noise + step *
+            var ptb = NumUt.ModUF32(curValue + noise + step *
                       (
-                          DeltaL +
-                          DeltaR +
-                          DeltaT +
-                          DeltaB
-                      );
+                          deltaL +
+                          deltaR +
+                          deltaT +
+                          deltaB
+                      ));
 
             return new P1V<int, float>(index, ptb);
         }
 
-        public NodeGrid Update(float noiseLevel, float step)
+        public NodeGrid Update(float step, float noiseLevel)
         {
-            var res = Enumerable.Range(0, Strides.Count())
-                
-                .Select(i => Update(i, noiseLevel, step));
+            var noisyList = Noise.Take(Strides.Count())
+                .Select(t => t*noiseLevel)
+                .ToList();
+
+            var res = noisyList.Select((v, i) => Update(i, v, step));           
 
             var nuVals = new float[Strides.Count()];
 

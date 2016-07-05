@@ -5,9 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using NodePad.Common;
-using NodePad.Model;
 using NodePad.Model.P;
-using NodePad.Model.S;
 using NodePad.ViewModel.Common;
 using TT;
 
@@ -31,11 +29,10 @@ namespace NodePad.ViewModel.Pages.CPU
 
             Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 1");
 
-           // NodeGrid = StarProcs.RandStarGrid(Bounds, 1293, 1555);
+            NodeGrid = NodeProcs.RandNodeGrid(Bounds, 1293, 1555);
 
             UpdateUi();
         }
-
 
 
         #region local vars
@@ -48,6 +45,7 @@ namespace NodePad.ViewModel.Pages.CPU
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         #endregion
+
 
         #region public vars
 
@@ -96,8 +94,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
                 for (var i = 0; _isRunning; i++)
                 {
-                    //NodeGrid.GetDeltas();
-                    //NodeGrid.UpdateS(StepSizeVm.Value, NoiseLevelVm.Value);
+                    NodeGrid = NodeGrid.Update(StepSizeVm.Value, NoiseLevelVm.Value);
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {
