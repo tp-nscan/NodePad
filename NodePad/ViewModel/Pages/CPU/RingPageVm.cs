@@ -89,7 +89,7 @@ namespace NodePad.ViewModel.Pages.CPU
                 for (var i = 0; _isRunning; i++)
                 {
                     StarGrid.GetDeltas();
-                    StarGrid.UpdateP(StepSizeVm.Value, NoiseLevelVm.Value);
+                    StarGrid.UpdateS(StepSizeVm.Value, NoiseLevelVm.Value);
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {

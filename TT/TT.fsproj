@@ -74,6 +74,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Rop.fs" />
     <Compile Include="NumUt.fs" />
+    <Compile Include="ColUtils.fs" />
     <Compile Include="MathUtils.fs" />
     <Compile Include="BT.fs" />
     <Compile Include="Gen.fs" />

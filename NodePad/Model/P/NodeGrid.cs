@@ -1,18 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NodePad.Common;
 using TT;
 
 namespace NodePad.Model.P
 {
     public class NodeGrid
     {
-        public NodeGrid(Sz2<int> strides, float[] values, int generation, IEnumerable<float> noise)
+        public NodeGrid(Sz2<int> strides, IEnumerable<P1V<int, float>> tuples, int generation, int seed)
         {
             Strides = strides;
-            Values = values;
+            Values = new float[Strides.Count()];
+            foreach (var tup in tuples)
+            {
+                Values[tup.X] = tup.V;
+            }
+
             Generation = generation;
-            Noise = noise;
+
+            Seed = seed;
+            var randy = GenV.Twist(Seed);
+            Noise = GenS.NormalSF32(randy, 0.0f, 1.0f).Take(Strides.Count()).ToArray();
+            NextSeed = randy.Next();
 
             var Offhi = new P2<int>(0, -1);
             var Offlo = new P2<int>(0, 1);
@@ -24,8 +32,11 @@ namespace NodePad.Model.P
             Left = GridUtil.OffsetIndexes(Strides, Offlf);
             Right = GridUtil.OffsetIndexes(Strides, Offrt);
         }
-        
-        public IEnumerable<float> Noise { get; }
+
+        public int NextSeed { get; }
+        public int Seed { get; }
+
+        public IList<float> Noise { get; }
 
         public int Generation { get; }
 
@@ -36,7 +47,7 @@ namespace NodePad.Model.P
         public int[] Left { get; }
         public int[] Right { get; }
 
-        public P1V<int, float> Update(int index, float noise, float step)
+        public P1V<int, float> Update(int index, float noiseLevel, float step)
         {
             var curValue = Values[index];
             var deltaL = NNfunc.ModUFDelta(curValue, Values[Left[index]]);
@@ -44,45 +55,20 @@ namespace NodePad.Model.P
             var deltaT = NNfunc.ModUFDelta(curValue, Values[Top[index]]);
             var deltaB = NNfunc.ModUFDelta(curValue, Values[Bottom[index]]);
 
-            var ptb = NumUt.ModUF32(curValue + noise + step *
-                      (
-                          deltaL +
-                          deltaR +
-                          deltaT +
-                          deltaB
-                      ));
+            var ptb = NumUt.ModUF32
+                (
+                    curValue + 
+                    noiseLevel * Noise[index] + 
+                    step * (
+                              deltaL +
+                              deltaR +
+                              deltaT +
+                              deltaB
+                           )
+                );
 
             return new P1V<int, float>(index, ptb);
         }
-
-        public NodeGrid Update(float step, float noiseLevel)
-        {
-            var noisyList = Noise.Take(Strides.Count())
-                .Select(t => t*noiseLevel)
-                .ToList();
-
-            var res = noisyList.Select((v, i) => Update(i, v, step));           
-
-            var nuVals = new float[Strides.Count()];
-
-            foreach (var tup in res)
-            {
-                nuVals[tup.X] = tup.V;
-            }
-
-            return new NodeGrid(Strides, nuVals, Generation+1, Noise);
-        }
-
-    }
-
-    public static class GridHelpers
-    {
-        public static int IndexForRc(int row, int col, int rowCount, int colCount)
-        {
-            return ((col + colCount) % colCount) + ((row + rowCount) % rowCount) * colCount;
-        }
-
-
 
     }
 

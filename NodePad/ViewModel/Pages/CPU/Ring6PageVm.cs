@@ -88,13 +88,19 @@ namespace NodePad.ViewModel.Pages.CPU
             _isRunning = true;
             CommandManager.InvalidateRequerySuggested();
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 _stopwatch.Start();
 
                 for (var i = 0; _isRunning; i++)
                 {
-                    NodeGrid = NodeGrid.Update(StepSizeVm.Value, NoiseLevelVm.Value);
+                    //using (SemaphoreSlim sem = new SemaphoreSlim(1))
+                    //{
+                    //}
+
+                   NodeGrid = await NodeGrid.UpdateP2(StepSizeVm.Value, NoiseLevelVm.Value);
+
+                  //  NodeGrid = NodeGrid.UpdateP3(StepSizeVm.Value, NoiseLevelVm.Value);
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {
@@ -113,7 +119,7 @@ namespace NodePad.ViewModel.Pages.CPU
                     }
                 }
 
-             }, _cancellationTokenSource.Token );
+            }, _cancellationTokenSource.Token );
 
         }
 
@@ -149,7 +155,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
         private void UpdateUi()
         {
-            Grid2DVm.UpdateData(NodeGrid.CurValuesAsP2Vs());
+            Grid2DVm.UpdateData(NodeGrid.DataToP2Vs());
             OnPropertyChanged("Generation");
             OnPropertyChanged("ElapsedTime");
         }

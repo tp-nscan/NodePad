@@ -39,7 +39,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
 
             DeltaToNoiseVm = new SliderVm(new I<float>(0.0f, 0.9f), 0.01, "0.00", "DeltaToNoise")
-            { Title = "Delta to noise", Value = 0.2f };
+            { Title = "Delta to noiseLevel", Value = 0.2f };
 
 
             NoiseFieldCplVm = new SliderVm(new I<float>(0.0f, 0.4f), 0.01, "0.00", "NoiseFieldCpl")

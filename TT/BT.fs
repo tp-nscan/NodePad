@@ -104,14 +104,6 @@ module BTInline =
         else res
 
 
-//    let inline AddInRangeI bounds a b =
-//        let res = a + b
-//        if res < bounds.Min then bounds.Min
-//        else if res > bounds.Max then bounds.Max
-//        else res
-
-
-
     let inline Area (range:^a when 
                         ^a:(member MinX : ^b) and ^a:(member MaxX : ^b) 
                         and
