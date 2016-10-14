@@ -166,11 +166,10 @@ namespace NodePad.Model.P
             {
                 var i1 = i;
                 var ng = nodeGrid.Copy();
-                trackedTasks.Add(Task.Run(() =>
-                {
-                    return ng.UpdateSeveral(localOrders[i1], step, noiseLevel).ToList();
-
-                }));
+                trackedTasks.Add(
+                    Task.Run(
+                        () => ng.UpdateSeveral(localOrders[i1], step, noiseLevel).ToList())
+                );
             }
 
             await Task.WhenAll(trackedTasks);

@@ -1,6 +1,3 @@
-using System;
-using TT;
-
 namespace RepoLocalDB
 {
     public enum DataType

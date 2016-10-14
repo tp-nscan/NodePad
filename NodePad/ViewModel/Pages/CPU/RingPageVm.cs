@@ -36,7 +36,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
         #region local vars
 
-        private static readonly int GridStride = 256;
+        private static readonly int GridStride = 128;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
         private StarGrid StarGrid { get; set; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();

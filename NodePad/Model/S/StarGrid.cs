@@ -59,7 +59,6 @@ namespace NodePad.Model.S
 
             Generation++;
         }
-
     }
 
 }
