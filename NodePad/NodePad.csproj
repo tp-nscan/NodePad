@@ -113,6 +113,7 @@
     <Compile Include="Common\CommandBase.cs" />
     <Compile Include="Common\NotifyingCollection.cs" />
     <Compile Include="Common\ThreadSafeRandom.cs" />
+    <Compile Include="Model\P\NodeArray.cs" />
     <Compile Include="Model\P\NodeProcs.cs" />
     <Compile Include="Model\P\Node.cs" />
     <Compile Include="Model\P\NodeGrid.cs" />
