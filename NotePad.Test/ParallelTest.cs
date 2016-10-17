@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NodePad.Common;
 
 namespace NodePad.Test
 {
     [TestClass]
     public class ParallelTest
     {
-
         [TestMethod]
-        public unsafe void TestMethod22p()
+        public unsafe void SerialFixed1d()
         {
             var alength = 16384;
 
@@ -48,9 +49,9 @@ namespace NodePad.Test
 
 
         [TestMethod]
-        public void TestMethod12p()
+        public void Parallel1d()
         {
-            var alength = 16384000;
+            var alength = 16384;
 
             var ape1 = new double[alength];
             var ape2 = new double[alength];
@@ -64,11 +65,11 @@ namespace NodePad.Test
             }
 
             sw.Start();
-            int chunks = 16;
-            for (var s = 0; s < 10; s++)
+            int chunks = 1;
+            for (var s = 0; s < 1000; s++)
             {
-                Parallel.For(0, chunks, i => ProcStretch(i, chunks, ape1, ape2));
-                Parallel.For(0, chunks, i => ProcStretch(i, chunks, ape2, ape1));
+                Parallel.For(0, chunks, i => ProcStretch1d(i, chunks, ape1, ape2));
+                Parallel.For(0, chunks, i => ProcStretch1d(i, chunks, ape2, ape1));
             }
 
             sw.Stop();
@@ -76,7 +77,7 @@ namespace NodePad.Test
         }
 
 
-        void ProcStretch(int chunk, int max, double[] aRay, double[] bRay)
+        void ProcStretch1d(int chunk, int max, double[] aRay, double[] bRay)
         {
             var alength = aRay.Length;
             var start = chunk * alength / max;
@@ -88,10 +89,88 @@ namespace NodePad.Test
             }
         }
 
+
+        [TestMethod]
+        public void Parallel2d()
+        {
+            var alength = 262144;
+            var cpl = 0.1;
+            var noise = 0.1;
+
+            var rando = new ThreadSafeRandom();
+            var ape1 = new double[alength];
+            var ape2 = new double[alength];
+
+            var sw = new Stopwatch();
+            var randy = new Random();
+
+            for (var i = 0; i < alength; i++)
+            {
+                ape1[i] = randy.NextDouble() * 2 - 1.0;
+            }
+
+            for (var k = 0; k < 1; k++)
+            {
+                sw.Start();
+                var chunks = 4;
+                for (var s = 0; s < 40; s++)
+                {
+                    noise = 0.1 - 0.002 * s;
+                    for (var q = 0; q < 50; q++)
+                    {
+                        var noise1 = noise;
+                        Parallel.For(0, chunks, i => ProcStretch2d(i, chunks, ape1, ape2, cpl, noise1, rando));
+                        Parallel.For(0, chunks, i => ProcStretch2d(i, chunks, ape2, ape1, cpl, noise1, rando));
+                    }
+                    Debug.WriteLine("{0}\t{1}\t{2}", s, noise, Correlo(ape1));
+                }
+            //for (var s = 0; s < 1000; s++)
+                //{
+                //    ProcStretch2d(0, 1, ape1, ape2, cpl, noise, rando);
+                //    ProcStretch2d(0, 1, ape2, ape1, cpl, noise, rando);
+                //}
+
+                sw.Stop();
+                Debug.WriteLine("Elapsed={0}", sw.Elapsed);
+                sw.Reset();
+            }
+        }
+
+        void ProcStretch2d(int chunk, int max, double[] aRay, double[] bRay, double cpl, double noiseLevel, Random randy)
+        {
+            var alength = aRay.Length;
+            var slength = (int)Math.Sqrt(alength);
+            var start = chunk * alength / max;
+            var end = chunk * alength / max + alength / max;
+            var halfCpl = cpl/2;
+
+            for (var i = start; i < end; i++)
+            {
+                var nbrs = bRay[(i + 1 + alength) % alength] 
+                         + bRay[(i - 1 + alength) % alength]
+                         + bRay[(i - slength + alength) % alength]
+                         + bRay[(i + slength + alength) % alength];
+
+                var res = cpl * nbrs + bRay[i] + randy.NextDouble() * noiseLevel - halfCpl;
+                aRay[i] = (res < -1.0) ? -1.0 : (res > 1.0) ? 1.0 : res;
+            }
+        }
+
+        public double Correlo(double[] aRay)
+        {
+            var alength = aRay.Length;
+            double vRet = 0;
+            for (var i = 0; i < alength; i++)
+            {
+                vRet += aRay[i] * aRay[(i + 1) % alength];
+            }
+            return vRet;
+        }
+
         [TestMethod]
         public unsafe void TestMethod22()
         {
-            var alength = 1638400;
+            var alength = 16384;
 
             var ape1 = new double[alength];
             var ape2 = new double[alength];
@@ -106,7 +185,7 @@ namespace NodePad.Test
 
             sw.Start();
             
-            for (var s = 0; s < 10; s++)
+            for (var s = 0; s < 1000; s++)
             {
                 fixed (double* aptr1 = ape1, aptr2 = ape2)
                 {
@@ -128,7 +207,7 @@ namespace NodePad.Test
         [TestMethod]
         public void TestMethod12()
         {
-            var alength = 16384000;
+            var alength = 16384;
 
             var ape1 = new double[alength];
             var ape2 = new double[alength];
@@ -143,7 +222,7 @@ namespace NodePad.Test
 
             sw.Start();
 
-            for (var s = 0; s < 10; s++)
+            for (var s = 0; s < 1000; s++)
             {
                 for (var i = 0; i < alength; i++)
                 {
