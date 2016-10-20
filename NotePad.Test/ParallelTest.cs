@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NodePad.Common;
@@ -122,7 +121,7 @@ namespace NodePad.Test
                         Parallel.For(0, chunks, i => ProcStretch2d(i, chunks, ape1, ape2, cpl, noise1, rando));
                         Parallel.For(0, chunks, i => ProcStretch2d(i, chunks, ape2, ape1, cpl, noise1, rando));
                     }
-                    Debug.WriteLine("{0}\t{1}\t{2}", s, noise, Correlo(ape1));
+                    //Debug.WriteLine("{0}\t{1}\t{2}", s, noise, Correlo(ape1));
                 }
 
                 sw.Stop();
@@ -137,10 +136,9 @@ namespace NodePad.Test
             var alength = 16384;
             var cpl = 0.1;
 
-            var rando = new ThreadSafeRandom();
+            var randy = new ThreadSafeRandom();
 
             var sw = new Stopwatch();
-            var randy = new Random();
 
             var nodeArray = new NodeArray(
                 Enumerable.Range(0, alength)
@@ -158,7 +156,7 @@ namespace NodePad.Test
                         nodeArray = NodeArray.UpdateStar(nodeArray, cpl, noise, randy);
                         nodeArray = NodeArray.UpdateStar(nodeArray, cpl, noise, randy);
                     }
-                    Debug.WriteLine("{0}\t{1}\t{2}", s, noise, Correlo(nodeArray.Current.ToArray()));
+                   // Debug.WriteLine("{0}\t{1}\t{2}", s, noise, Correlo(nodeArray.Current.ToArray()));
                 }
 
                 sw.Stop();

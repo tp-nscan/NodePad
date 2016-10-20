@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,13 +42,23 @@ namespace NodePad.Model.P
                 });
         }
 
+        public static IEnumerable<P2V<int, float>> DataToP2Vs(this NodeArray nodeArray, Sz2<int> bounds)
+        {
+            var index = 0;
+            for (var x = 0; x < bounds.X; x++)
+            {
+                for (var y = 0; y < bounds.X; y++)
+                {
+                    yield return new P2V<int, float>(x, y, (float) nodeArray.Current[index++]);
+                }
+            }
+        }
 
         public static IEnumerable<P1V<int, float>> DataToP1Vs(this NodeGrid nodeGrid)
         {
             return Enumerable.Range(0, nodeGrid.Strides.Count())
                 .Select(i => new P1V<int, float>(i, nodeGrid.Values[i]));
         }
-
 
         public static NodeGrid RandNodeGrid(Sz2<int> bounds, int initSeed, int updateSeed)
         {
@@ -147,7 +158,7 @@ namespace NodePad.Model.P
             }
             else
             {
-                //nodeGrid = nodeGrid.MakeNextGen(results);
+                //nodeArray = nodeArray.MakeNextGen(results);
             }
 
             return nodeGrid;
@@ -180,6 +191,22 @@ namespace NodePad.Model.P
             }
 
             return nodeGrid.MakeNextGen(results);
+        }
+
+        public static NodeArray RandNodeArray(Sz2<int> bounds, Random randy)
+        {
+            return new NodeArray(Enumerable.Range(0, bounds.Count())
+                          .Select(i => randy.NextDouble() * 2 - 1.0)
+                          .ToArray());
+        }
+
+
+
+        public static async Task<NodeArray> UpdateFred(this NodeArray nodeArray, double cpl, double noise, Random randy)
+        {
+            NodeArray result = nodeArray;
+            await Task.Run(() => { result = NodeArray.UpdateStar(nodeArray, cpl, noise, randy); });
+            return result;
         }
 
 

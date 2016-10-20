@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace NodePad.ViewModel.Pages.CPU
     {
         public Ring6PageVm()
         {
+            Randy = new ThreadSafeRandom();
 
             DisplayFrequencySliderVm = new SliderVm(new I<float>(1.0f, 50.0f), 1, "0", "DisplayFrequency")
             { Title = "Display Frequency", Value = 20 };
@@ -29,7 +31,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
             Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 1");
 
-            NodeGrid = NodeProcs.RandNodeGrid(Bounds, 1293, 1555);
+            NodeArray = NodeProcs.RandNodeArray(Bounds, Randy);
 
             UpdateUi();
         }
@@ -39,10 +41,11 @@ namespace NodePad.ViewModel.Pages.CPU
 
         private static readonly int GridStride = 128;
         private static readonly Sz2<int> Bounds = new Sz2<int>(GridStride, GridStride);
-        private NodeGrid NodeGrid { get; set; }
+        private NodeArray NodeArray { get; set; }
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private bool _isRunning;
         private readonly Stopwatch _stopwatch = new Stopwatch();
+        private Random Randy { get; set; }
 
         #endregion
 
@@ -55,7 +58,7 @@ namespace NodePad.ViewModel.Pages.CPU
                                      $"{_stopwatch.Elapsed.Milliseconds.ToString("000")}";
 
 
-        public int Generation => NodeGrid.Generation;
+        public int Generation => NodeArray.Generation;
 
         private Grid2DVm<float> _grid2DVm;
         public Grid2DVm<float> Grid2DVm
@@ -94,13 +97,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
                 for (var i = 0; _isRunning; i++)
                 {
-                    //using (SemaphoreSlim sem = new SemaphoreSlim(1))
-                    //{
-                    //}
-
-                   NodeGrid = await NodeGrid.UpdateP2(StepSizeVm.Value, NoiseLevelVm.Value);
-
-                  //  NodeGrid = NodeGrid.UpdateP3(StepSizeVm.Value, NoiseLevelVm.Value);
+                    NodeArray = await NodeArray.UpdateFred(StepSizeVm.Value, NoiseLevelVm.Value, Randy);
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {
@@ -155,7 +152,7 @@ namespace NodePad.ViewModel.Pages.CPU
 
         private void UpdateUi()
         {
-            Grid2DVm.UpdateData(NodeGrid.DataToP2Vs());
+            Grid2DVm.UpdateData(NodeArray.DataToP2Vs(Bounds));
             OnPropertyChanged("Generation");
             OnPropertyChanged("ElapsedTime");
         }
