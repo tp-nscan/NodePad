@@ -29,7 +29,7 @@ namespace NodePad.ViewModel.Pages.CPU
             NoiseLevelVm = new SliderVm(new I<float>(0.0f, 0.3f), 0.002, "0.000", "NoiseLevel")
             { Title = "Noise", Value = 0.02f };
 
-            Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.QuadColorUFLeg, "Ring 1");
+            Grid2DVm = new Grid2DVm<float>(Bounds, ColorSets.RedBlueSFLeg, "Ring 1");
 
             NodeArray = NodeProcs.RandNodeArray(Bounds, Randy);
 
@@ -85,19 +85,20 @@ namespace NodePad.ViewModel.Pages.CPU
             param => CanStart()
             ));
 
+
         private async void DoStart()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             _isRunning = true;
             CommandManager.InvalidateRequerySuggested();
 
-            await Task.Run(async () =>
+            await Task.Run(() =>
             {
                 _stopwatch.Start();
 
                 for (var i = 0; _isRunning; i++)
                 {
-                    NodeArray = await NodeArray.UpdateFred(StepSizeVm.Value, NoiseLevelVm.Value, Randy);
+                    NodeArray = NodeArray.UpdateStar(NodeArray, StepSizeVm.Value, NoiseLevelVm.Value, Randy);
 
                     if (_cancellationTokenSource.IsCancellationRequested)
                     {
@@ -106,7 +107,7 @@ namespace NodePad.ViewModel.Pages.CPU
                         CommandManager.InvalidateRequerySuggested();
                     }
 
-                    if (i % (int)DisplayFrequencySliderVm.Value == 0)
+                    if (i%(int) DisplayFrequencySliderVm.Value == 0)
                     {
                         Application.Current.Dispatcher.Invoke
                             (
@@ -115,10 +116,9 @@ namespace NodePad.ViewModel.Pages.CPU
                             );
                     }
                 }
-
-            }, _cancellationTokenSource.Token );
-
+              }, _cancellationTokenSource.Token );
         }
+
 
         private bool CanStart()
         {
