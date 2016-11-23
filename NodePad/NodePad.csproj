@@ -173,6 +173,10 @@
     <Compile Include="ViewModel\Pages\CPU\Ring6PageVm.cs" />
     <Compile Include="ViewModel\Pages\CPU\RingPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\ControlPageVm.cs" />
+    <Compile Include="ViewModel\Pages\Sandbox\FractalCaPageVm.cs" />
+    <Compile Include="View\Pages\Sandbox\FractalCaPage.xaml.cs">
+      <DependentUpon>FractalCaPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Pages\Sandbox\GraphPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\Grid2d2IPageVm.cs" />
     <Compile Include="ViewModel\Pages\Sandbox\Grid2dPageVm.cs" />
@@ -301,6 +305,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\Sandbox\FractalCaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Common\CommonThemes.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -90,6 +90,13 @@ namespace NodePad.Test
             }
         }
 
+        [TestMethod]
+        public void Liinky()
+        {
+            var ll = new object[] {};
+            var res = ll.ToArray();
+
+        }
 
         [TestMethod]
         public void Parallel2d()
@@ -134,7 +141,7 @@ namespace NodePad.Test
         public void ParallelArray2d()
         {
             var alength = 16384;
-            var cpl = 0.1;
+            var cpl = 0.00001;
 
             var randy = new ThreadSafeRandom();
 
@@ -145,7 +152,7 @@ namespace NodePad.Test
                           .Select(i=> randy.NextDouble() * 2 - 1.0)
                           .ToArray());
 
-            for (var k = 0; k < 8; k++)
+            for (var k = 0; k < 3; k++)
             {
                 sw.Start();
                 for (var s = 0; s < 40; s++)

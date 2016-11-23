@@ -15,6 +15,7 @@
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="sandbox">
             <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Ca" Source="/View/Pages/Sandbox/FractalCaPage.xaml" />
                 <mui:Link DisplayName="Controls" Source="/View/Pages/Sandbox/ControlPage.xaml" />
                 <mui:Link DisplayName="Graph" Source="/View/Pages/Sandbox/GraphPage.xaml" />
                 <mui:Link DisplayName="Grid2d" Source="/View/Pages/Sandbox/Grid2dPage.xaml" />
