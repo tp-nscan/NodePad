@@ -156,7 +156,7 @@ namespace NodePad.Test
 
 
         [TestMethod]
-        public unsafe  void TestMethod6()
+        public unsafe void TestStackalloc()
         {
             const int arraySize = 950000;
             float* fib = stackalloc float[arraySize];
@@ -173,5 +173,27 @@ namespace NodePad.Test
                 Console.WriteLine(fib[i]);
             }
         }
+
+
+        [TestMethod]
+        public unsafe void TestFixed()
+        {
+            const int arraySize = 950000;
+            float* fib = stackalloc float[arraySize];
+            float* p = fib;
+            // The sequence begins with 1, 1.
+            *p++ = *p++ = 1;
+            for (int i = 2; i < arraySize; ++i, ++p)
+            {
+                // Sum the previous two numbers.
+                *p = p[-1] - p[-2];
+            }
+            for (var i = arraySize - 10; i < arraySize; ++i)
+            {
+                Console.WriteLine(fib[i]);
+            }
+        }
+
+
     }
 }
